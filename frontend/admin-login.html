@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Login - Student Grievance System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --primary-light: #e0e7ff;
+            --secondary-color: #3a0ca3;
+            --accent-color: #4895ef;
+            --dark-color: #1a1a2e;
+            --light-color: #f8f9fa;
+            --gray-color: #6c757d;
+            --border-radius: 16px;
+            --border-radius-sm: 8px;
+            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            --gradient: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background-color: #f9fafc; color: var(--dark-color); min-height: 100vh; display: flex; flex-direction: column; }
+        header { background: white; padding: 20px 0; box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .header-container { display: flex; justify-content: center; align-items: center; }
+        .logo { display: flex; align-items: center; text-decoration: none; }
+        .logo-icon { width: 40px; height: 40px; background: var(--gradient); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; font-weight: bold; margin-right: 12px; }
+        .logo-text h1 { font-size: 1.5rem; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        main { flex: 1; display: flex; justify-content: center; align-items: center; padding: 60px 0; }
+        .auth-card { background: white; border-radius: var(--border-radius); padding: 40px; box-shadow: var(--box-shadow); width: 100%; max-width: 400px; }
+        .auth-card h2 { color: var(--primary-color); margin-bottom: 25px; font-size: 1.5rem; text-align: center; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; }
+        .form-group input, .form-group select { width: 100%; padding: 14px 20px; border: 1px solid #ddd; border-radius: var(--border-radius-sm); font-family: 'Poppins', sans-serif; transition: var(--transition); }
+        .form-group input:focus, .form-group select:focus { border-color: var(--primary-color); outline: none; box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2); }
+        .btn { display: inline-block; padding: 14px 28px; background: var(--gradient); color: white; border: none; border-radius: var(--border-radius-sm); font-weight: 600; cursor: pointer; transition: var(--transition); width: 100%; text-align: center; margin-top: 10px; }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(67, 97, 238, 0.4); }
+        .form-footer { text-align: center; margin-top: 20px; font-size: 0.9rem; color: var(--gray-color); }
+        .form-footer a { color: var(--primary-color); text-decoration: none; cursor: pointer; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: flex-start; padding: 40px 20px; overflow-y: auto; }
+        .modal.active { display: flex; }
+        .modal-content { background: white; border-radius: var(--border-radius); padding: 40px; width: 100%; max-width: 500px; box-shadow: var(--box-shadow); position: relative; animation: modalFadeIn 0.3s ease-out; margin: auto; }
+        @keyframes modalFadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        .close-modal { position: absolute; top: 20px; right: 20px; font-size: 1.5rem; color: var(--gray-color); cursor: pointer; transition: var(--transition); }
+        .close-modal:hover { color: var(--dark-color); }
+        footer { background: var(--dark-color); color: white; padding: 20px 0; text-align: center; font-size: 0.9rem; margin-top: auto; }
+        @media (max-width: 768px) { .modal { padding: 20px 10px; align-items: flex-start; } .modal-content { padding: 30px 20px; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">SGS</div>
+                <div class="logo-text"><h1>Student Grievance System</h1></div>
+            </a>
+        </div>
+    </header>
+    <main>
+        <div class="auth-card">
+            <h2><i class="fas fa-user-shield"></i> Admin Login</h2>
+            <form id="adminForm">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="adminEmail" placeholder="admin@college.edu" required />
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="adminPassword" placeholder="••••••••" required />
+                </div>
+                <div class="form-group">
+                    <label>Department</label>
+                    <select id="adminDept" required>
+                        <option value="">Select department</option>
+                        <option value="academic">Academic</option>
+                        <option value="hostel">Hostel</option>
+                        <option value="administration">Administration</option>
+                        <option value="facilities">Facilities</option>
+                        <option value="library">Library</option>
+                        <option value="transport">Transport</option>
+                        <option value="harassment">Harassment</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <div class="form-footer">New admin? <a id="showAdminSignup">Register here</a></div>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Student Grievance System. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('adminForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('adminEmail').value.trim();
+            const password = document.getElementById('adminPassword').value;
+            const department = document.getElementById('adminDept').value;
+
+            try {
+                const response = await fetch("http://localhost:9000/api/auth/admin-login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password, department })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert(`✅ Admin login successful! Welcome ${data.user.username}`);
+                    console.log("Admin Login Success:", data);
+                    localStorage.setItem('admin', JSON.stringify(data.user));
+                    localStorage.setItem('adminUserName', data.user.username);
+                    localStorage.setItem('adminUserImage', data.user.photo || 'https://randomuser.me/api/portraits/men/32.jpg');
+                    window.location.href = 'admin.html';
+                } else {
+                    alert(`❌ Login failed: ${data.message}`);
+                    console.error("Admin Login Error:", data);
+                }
+            } catch (err) {
+                alert("❌ Network error. Check backend server.");
+                console.error("Network Error:", err);
+            }
+        });
+        // Show admin signup form
+        document.getElementById('showAdminSignup').addEventListener('click', () => {
+            // Create modal for admin signup if not exists
+            if (!document.getElementById('adminSignupModal')) {
+                const modalHtml = `
+                <div class="modal active" id="adminSignupModal">
+                    <div class="modal-content animate__animated animate__fadeInUp">
+                        <span class="close-modal" id="closeAdminSignup">&times;</span>
+                        <h2><i class="fas fa-user-plus"></i> Admin Sign Up</h2>
+                        <form id="adminSignupForm">
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input type="text" id="adminSignupUsername" placeholder="Admin Name" required />
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="adminSignupEmail" placeholder="admin@college.edu" required />
+                            </div>
+                            <div class="form-group">
+                                <label>Department</label>
+                                <select id="adminSignupDept" required>
+                                    <option value="">Select department</option>
+                                    <option value="academic">Academic</option>
+                                    <option value="hostel">Hostel</option>
+                                    <option value="administration">Administration</option>
+                                    <option value="facilities">Facilities</option>
+                                    <option value="library">Library</option>
+                                    <option value="transport">Transport</option>
+                                    <option value="harassment">Harassment</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" id="adminSignupPassword" placeholder="••••••••" required />
+                            </div>
+                            <button type="submit" class="btn">Register</button>
+                        </form>
+                    </div>
+                </div>`;
+                document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+                // Close modal event
+                document.getElementById('closeAdminSignup').addEventListener('click', () => {
+                    document.getElementById('adminSignupModal').classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+
+                // Close modal on outside click
+                window.addEventListener('click', (e) => {
+                    if (e.target === document.getElementById('adminSignupModal')) {
+                        document.getElementById('adminSignupModal').classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+
+                // Handle admin signup form submit
+                document.getElementById('adminSignupForm').addEventListener('submit', async function(e) {
+                    e.preventDefault();
+
+                    const username = document.getElementById('adminSignupUsername').value.trim();
+                    const email = document.getElementById('adminSignupEmail').value.trim();
+                    const department = document.getElementById('adminSignupDept').value;
+                    const password = document.getElementById('adminSignupPassword').value;
+
+                    try {
+                        const response = await fetch("http://localhost:9000/api/auth/register-admin", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ username, email, department, password })
+                        });
+
+                        const data = await response.json();
+
+                        if (response.ok) {
+                            alert("✅ Admin account created successfully! Please login.");
+                            document.getElementById('adminSignupModal').classList.remove('active');
+                            document.body.style.overflow = 'auto';
+                            console.log("Admin Signup Success:", data);
+                        } else {
+                            alert(`❌ Error: ${data.message}`);
+                            console.error("Admin Signup Error:", data);
+                        }
+                    } catch (err) {
+                        alert("❌ Network error. Check backend server.");
+                        console.error("Network Error:", err);
+                    }
+                });
+            } else {
+                document.getElementById('adminSignupModal').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+    </script>
+</body>
+</html>

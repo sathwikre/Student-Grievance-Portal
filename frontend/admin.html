@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Dashboard - Student Grievance System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4bb543;
+            --warning-color: #ff9800;
+            --error-color: #ff3333;
+            --border-radius: 12px;
+            --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: #f5f5f5;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background: var(--dark-color);
+            color: white;
+            padding: 20px 0;
+            transition: var(--transition);
+        }
+
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-header h2 {
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+
+        .menu-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+        }
+
+        .menu-item:hover, .menu-item.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .menu-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: var(--dark-color);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .user-profile span {
+            font-weight: 500;
+        }
+
+        .user-profile input {
+            font-weight: 500;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 2px 5px;
+            width: 120px;
+        }
+
+        /* Stats Container */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-info h3 {
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+
+        .stat-info h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .stat-icon.total {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .stat-icon.pending {
+            background: linear-gradient(135deg, var(--warning-color), #ffb74d);
+            color: white;
+        }
+
+        .stat-icon.resolved {
+            background: linear-gradient(135deg, var(--success-color), #66bb6a);
+            color: white;
+        }
+
+        .stat-icon.rejected {
+            background: linear-gradient(135deg, var(--error-color), #ef5350);
+            color: white;
+        }
+
+        .filter-bar {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            background: white;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .filter-group label {
+            margin-right: 10px;
+            font-weight: 500;
+        }
+
+        select, input[type="text"], input[type="date"] {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            padding-left: 35px;
+            width: 250px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+
+        /* Status Badges */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: capitalize;
+        }
+
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-inprogress {
+            background-color: #cce5ff;
+            color: #004085;
+        }
+
+        .status-resolved {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-rejected {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Complaints Table */
+        .complaints-table {
+            width: 100%;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .action-btn:hover {
+            opacity: 0.8;
+        }
+
+        .view-btn {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .accept-btn {
+            background-color: var(--warning-color);
+            color: white;
+        }
+
+        .resolve-btn {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .reject-btn {
+            background-color: var(--error-color);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>Complaint Management</h2>
+            </div>
+            <div class="sidebar-menu">
+                <a href="#" class="menu-item active" data-filter="all">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="menu-item" data-filter="all">
+                    <i class="fas fa-inbox"></i>
+                    <span>All Complaints</span>
+                </a>
+                <a href="#" class="menu-item" data-filter="Pending">
+                    <i class="fas fa-clock"></i>
+                    <span>Pending</span>
+                </a>
+                <a href="#" class="menu-item" data-filter="InProgress">
+                    <i class="fas fa-spinner"></i>
+                    <span>In Progress</span>
+                </a>
+                <a href="#" class="menu-item" data-filter="Resolved">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Resolved</span>
+                </a>
+                <a href="#" class="menu-item" data-filter="Rejected">
+                    <i class="fas fa-times-circle"></i>
+                    <span>Rejected</span>
+                </a>
+                <a href="#" class="menu-item" id="reportsBtn">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Reports</span>
+                </a>
+                <a href="#" class="menu-item" id="settingsBtn">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+        <div class="header">
+            <h1>Complaint Dashboard</h1>
+            <div class="user-profile" id="adminUserProfile">
+                <img src="Bala-Latha-IAS.jpg" alt="Admin" id="adminUserImage">
+                <span id="adminUserName">Admin User</span>
+                <input type="text" id="adminUserNameInput" style="display: none;">
+                <button id="editNameBtn" class="action-btn view-btn" style="margin-left: 10px; padding: 5px 10px; font-size: 12px;">Edit Name</button>
+                <button id="saveNameBtn" class="action-btn resolve-btn" style="margin-left: 5px; padding: 5px 10px; font-size: 12px; display: none;">Save Name</button>
+                <button id="changePhotoBtn" class="action-btn view-btn" style="margin-left: 5px; padding: 5px 10px; font-size: 12px;">Change Photo</button>
+                <input type="file" id="photoInput" accept="image/*" style="display: none;">
+                <button id="savePhotoBtn" class="action-btn resolve-btn" style="margin-left: 5px; padding: 5px 10px; font-size: 12px; display: none;">Save Photo</button>
+            </div>
+        </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3>Total Complaints</h3>
+                        <h2 id="totalCount">0</h2>
+                    </div>
+                    <div class="stat-icon total">
+                        <i class="fas fa-list"></i>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3>Accepted</h3>
+                        <h2 id="acceptedCount">0</h2>
+                    </div>
+                    <div class="stat-icon pending">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3>Resolved</h3>
+                        <h2 id="resolvedCount">0</h2>
+                    </div>
+                    <div class="stat-icon resolved">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3>Rejected</h3>
+                        <h2 id="rejectedCount">0</h2>
+                    </div>
+                    <div class="stat-icon rejected">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Bar -->
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <label for="departmentFilter">Department:</label>
+                    <select id="departmentFilter">
+                        <option value="">All Departments</option>
+                        <option value="CSE">CSE</option>
+                        <option value="ECE">ECE</option>
+                        <option value="Civil">Civil</option>
+                        <option value="EEE">EEE</option>
+                        <option value="MEC">MEC</option>
+                        <option value="Chemical">Chemical</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="statusFilter">Status:</label>
+                    <select id="statusFilter">
+                        <option value="">All Statuses</option>
+                        <option value="Pending">Pending</option>
+                        <option value="InProgress">Accepted</option>
+                        <option value="Resolved">Resolved</option>
+                        <option value="Rejected">Rejected</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="typeFilter">Type:</label>
+                    <select id="typeFilter">
+                        <option value="">All Types</option>
+                        <option value="Academic">Academic</option>
+                        <option value="Hostel">Hostel</option>
+                        <option value="Facilities">Facilities</option>
+                        <option value="Staff Behavior">Staff Behavior</option>
+                        <option value="Safety Concern">Safety Concern</option>
+                        <option value="Harassment">Harassment</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="dateFrom">From Date:</label>
+                    <input type="date" id="dateFrom" />
+                </div>
+                <div class="filter-group">
+                    <label for="dateTo">To Date:</label>
+                    <input type="date" id="dateTo" />
+                </div>
+                <div class="filter-group search-box">
+                    <i class="fas fa-search"></i>
+                    <input id="searchInput" type="text" placeholder="Search complaints...">
+                </div>
+            </div>
+
+            <!-- Complaints Table -->
+            <div class="complaints-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Student Name</th>
+                            <th>Department</th>
+                            <th>Type</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="complaintsTableBody">
+                        <!-- Complaints will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Complaint Modal -->
+    <div id="viewModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 30px; border-radius: 12px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto;">
+            <h2 style="margin-bottom: 20px;">Complaint Details</h2>
+            <div id="complaintDetails"></div>
+            <button onclick="document.getElementById('viewModal').style.display='none';" style="margin-top: 20px; padding: 10px 20px; background: var(--primary-color); color: white; border: none; border-radius: 6px; cursor: pointer;">Close</button>
+        </div>
+    </div>
+
+    <script>
+        let allComplaints = [];
+        let currentAdmin = null;
+
+        // Load admin data from localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            const adminData = localStorage.getItem('admin');
+            if (adminData) {
+                currentAdmin = JSON.parse(adminData);
+                document.getElementById('adminUserName').textContent = currentAdmin.username;
+                if (currentAdmin.photo) {
+                    document.getElementById('adminUserImage').src = 'data:image/jpeg;base64,' + currentAdmin.photo;
+                }
+            }
+        });
+
+        async function fetchComplaints() {
+            try {
+                const response = await fetch('http://localhost:9000/api/complaints');
+                if (!response.ok) throw new Error('Failed to fetch complaints');
+                allComplaints = await response.json();
+                // Sort by type
+                allComplaints.sort((a, b) => a.type.localeCompare(b.type));
+                displayComplaints(allComplaints);
+                updateStats(allComplaints);
+            } catch (error) {
+                console.error('Error fetching complaints:', error);
+                alert('Failed to load complaints. Please check the server.');
+            }
+        }
+
+        function displayComplaints(complaints) {
+            const tbody = document.getElementById('complaintsTableBody');
+            tbody.innerHTML = '';
+            complaints.forEach(complaint => {
+                const row = document.createElement('tr');
+                const statusClass = complaint.status.toLowerCase().replace(' ', '');
+                const statusText = complaint.status === 'InProgress' ? 'Accepted' : complaint.status;
+                row.innerHTML = `
+                    <td>${complaint._id}</td>
+                    <td>${complaint.name}</td>
+                    <td>${complaint.department}</td>
+                    <td>${complaint.type}</td>
+                    <td>${new Date(complaint.date).toLocaleDateString()}</td>
+                    <td><span class="status-badge status-${statusClass}">${statusText}</span></td>
+                    <td>
+                        <button class="action-btn view-btn" data-id="${complaint._id}">View</button>
+                        <button class="action-btn accept-btn" data-id="${complaint._id}" ${complaint.status !== 'Pending' ? 'style="display:none;"' : ''}>Accept</button>
+                        <button class="action-btn resolve-btn" data-id="${complaint._id}" ${complaint.status === 'Resolved' || complaint.status === 'Rejected' ? 'style="display:none;"' : ''}>Resolve</button>
+                        <button class="action-btn reject-btn" data-id="${complaint._id}" ${complaint.status === 'Resolved' || complaint.status === 'Rejected' ? 'style="display:none;"' : ''}>Reject</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+            addActionListeners();
+        }
+
+        function updateStats(complaints) {
+            const total = complaints.length;
+            const accepted = complaints.filter(c => c.status === 'InProgress').length;
+            const resolved = complaints.filter(c => c.status === 'Resolved').length;
+            const rejected = complaints.filter(c => c.status === 'Rejected').length;
+
+            document.getElementById('totalCount').textContent = total;
+            document.getElementById('acceptedCount').textContent = accepted;
+            document.getElementById('resolvedCount').textContent = resolved;
+            document.getElementById('rejectedCount').textContent = rejected;
+        }
+
+        function filterComplaints() {
+            const department = document.getElementById('departmentFilter').value;
+            const status = document.getElementById('statusFilter').value;
+            const type = document.getElementById('typeFilter').value;
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const dateFrom = document.getElementById('dateFrom').value ? new Date(document.getElementById('dateFrom').value) : null;
+            const dateTo = document.getElementById('dateTo').value ? new Date(document.getElementById('dateTo').value) : null;
+
+            let filtered = allComplaints.filter(complaint => {
+                const complaintDate = new Date(complaint.date);
+                const matchesDateFrom = dateFrom ? complaintDate >= dateFrom : true;
+                const matchesDateTo = dateTo ? complaintDate <= dateTo : true;
+
+                return (!department || complaint.department === department) &&
+                       (!status || complaint.status === status) &&
+                       (!type || complaint.type === type) &&
+                       (!search || complaint.name.toLowerCase().includes(search) ||
+                        complaint.complaintText.toLowerCase().includes(search) ||
+                        complaint.type.toLowerCase().includes(search)) &&
+                       matchesDateFrom && matchesDateTo;
+            });
+
+            displayComplaints(filtered);
+        }
+
+        async function updateComplaintStatus(id, status) {
+            try {
+                const response = await fetch(`http://localhost:9000/api/complaints/${id}/status`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status })
+                });
+                if (!response.ok) throw new Error('Failed to update status');
+                await fetchComplaints(); // Refresh data
+                alert(`Complaint ${status.toLowerCase()} successfully.`);
+            } catch (error) {
+                console.error('Error updating status:', error);
+                alert('Failed to update complaint status.');
+            }
+        }
+
+        function addActionListeners() {
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const complaint = allComplaints.find(c => c._id === id);
+                    if (!complaint) {
+                        alert('Complaint not found');
+                        return;
+                    }
+                    console.log('Complaint attachments:', complaint.attachments);
+                    let detailsHtml = `
+                        <p><strong>ID:</strong> ${complaint._id}</p>
+                        <p><strong>Name:</strong> ${complaint.name}</p>
+                        <p><strong>Email:</strong> ${complaint.email}</p>
+                        <p><strong>Type:</strong> ${complaint.type}</p>
+                        <p><strong>Department:</strong> ${complaint.department}</p>
+                        <p><strong>Date:</strong> ${new Date(complaint.date).toLocaleDateString()}</p>
+                        <p><strong>Status:</strong> ${complaint.status}</p>
+                        <p><strong>Complaint:</strong> ${complaint.complaintText}</p>
+                    `;
+
+                    // Show uploaded files if any
+                    if (complaint.attachments && complaint.attachments.length > 0) {
+                        detailsHtml += '<p><strong>Uploaded Files:</strong></p><ul>';
+                        complaint.attachments.forEach(attachment => {
+                            const blob = new Blob([new Uint8Array(attachment.data.data)], { type: attachment.contentType });
+                            const url = URL.createObjectURL(blob);
+                            detailsHtml += `<li><a href="${url}" download="${attachment.filename}" target="_blank" rel="noopener noreferrer">${attachment.filename}</a></li>`;
+                        });
+                        detailsHtml += '</ul>';
+                    } else {
+                        detailsHtml += '<p><strong>Uploaded Files:</strong> None</p>';
+                    }
+
+                    const complaintDetailsDiv = document.getElementById('complaintDetails');
+                    complaintDetailsDiv.innerHTML = detailsHtml;
+
+                    // Show modal
+                    document.getElementById('viewModal').style.display = 'flex';
+                });
+            });
+
+            document.querySelectorAll('.accept-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    updateComplaintStatus(id, 'InProgress');
+                });
+            });
+
+            document.querySelectorAll('.resolve-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    updateComplaintStatus(id, 'Resolved');
+                });
+            });
+
+            document.querySelectorAll('.reject-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    updateComplaintStatus(id, 'Rejected');
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchComplaints();
+
+            // Add filter listeners
+            document.getElementById('departmentFilter').addEventListener('change', filterComplaints);
+            document.getElementById('statusFilter').addEventListener('change', filterComplaints);
+            document.getElementById('typeFilter').addEventListener('change', filterComplaints);
+            document.getElementById('searchInput').addEventListener('input', filterComplaints);
+            document.getElementById('dateFrom').addEventListener('change', filterComplaints);
+            document.getElementById('dateTo').addEventListener('change', filterComplaints);
+        });
+
+        // Sidebar menu item click handlers for filtering
+        document.querySelectorAll('.sidebar-menu .menu-item[data-filter]').forEach(item => {
+            item.addEventListener('click', e => {
+                e.preventDefault();
+                const filter = item.getAttribute('data-filter');
+                // Update active class
+                document.querySelectorAll('.sidebar-menu .menu-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+
+                if (filter === 'all') {
+                    // Reset filters
+                    document.getElementById('departmentFilter').value = '';
+                    document.getElementById('statusFilter').value = '';
+                    document.getElementById('typeFilter').value = '';
+                    document.getElementById('dateFrom').value = '';
+                    document.getElementById('dateTo').value = '';
+                } else {
+                    // Set status filter to selected filter
+                    document.getElementById('statusFilter').value = filter;
+                }
+                filterComplaints();
+            });
+        });
+
+        // Reports and Settings buttons (placeholders)
+        const reportsBtn = document.getElementById('reportsBtn');
+        if (reportsBtn) {
+            reportsBtn.addEventListener('click', e => {
+                e.preventDefault();
+                alert('Reports page is under construction.');
+            });
+        }
+        const settingsBtn = document.getElementById('settingsBtn');
+        if (settingsBtn) {
+            settingsBtn.addEventListener('click', e => {
+                e.preventDefault();
+                alert('Settings page is under construction.');
+            });
+        }
+
+        // Profile name change functionality
+        const editNameBtn = document.getElementById('editNameBtn');
+        const saveNameBtn = document.getElementById('saveNameBtn');
+        const adminUserName = document.getElementById('adminUserName');
+        const adminUserNameInput = document.getElementById('adminUserNameInput');
+
+        editNameBtn.addEventListener('click', function() {
+            adminUserName.style.display = 'none';
+            adminUserNameInput.style.display = 'inline-block';
+            adminUserNameInput.value = adminUserName.textContent;
+            saveNameBtn.style.display = 'inline-block';
+            editNameBtn.style.display = 'none';
+        });
+
+        saveNameBtn.addEventListener('click', async function() {
+            const newName = adminUserNameInput.value.trim();
+            console.log('Save Name clicked, newName:', newName, 'currentAdmin:', currentAdmin);
+            if (!newName || !currentAdmin) {
+                console.warn('Missing newName or currentAdmin');
+                return;
+            }
+            try {
+                const response = await fetch('http://localhost:9000/api/auth/update-profile', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: currentAdmin.email, username: newName })
+                });
+                const result = await response.json();
+                console.log('Update profile response:', response.status, result);
+                if (response.ok) {
+                    alert('Profile name updated successfully!');
+                    adminUserName.textContent = newName;
+                    adminUserName.style.display = 'inline-block';
+                    adminUserNameInput.style.display = 'none';
+                    saveNameBtn.style.display = 'none';
+                    editNameBtn.style.display = 'inline-block';
+                    // Update localStorage
+                    currentAdmin.username = newName;
+                    localStorage.setItem('admin', JSON.stringify(currentAdmin));
+                } else {
+                    alert('Failed to update name: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Error updating name:', error);
+                alert('Error updating name.');
+            }
+        });
+
+        // Profile photo change functionality
+        const changePhotoBtn = document.getElementById('changePhotoBtn');
+        const photoInput = document.getElementById('photoInput');
+        const savePhotoBtn = document.getElementById('savePhotoBtn');
+        const adminUserImage = document.getElementById('adminUserImage');
+        let selectedFile = null;
+
+        changePhotoBtn.addEventListener('click', function() {
+            photoInput.click();
+        });
+
+        photoInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                selectedFile = file;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    adminUserImage.src = e.target.result;
+                    savePhotoBtn.style.display = 'inline-block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        savePhotoBtn.addEventListener('click', async function() {
+            console.log('Save Photo clicked, selectedFile:', selectedFile, 'currentAdmin:', currentAdmin);
+            if (!selectedFile || !currentAdmin) {
+                console.warn('Missing selectedFile or currentAdmin');
+                return;
+            }
+            const formData = new FormData();
+            formData.append('photo', selectedFile);
+            formData.append('email', currentAdmin.email);
+            try {
+                const response = await fetch('http://localhost:9000/api/auth/upload-photo', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                console.log('Upload photo response:', response.status, result);
+                if (response.ok) {
+                    alert('Profile photo updated successfully!');
+                    adminUserImage.src = 'data:image/jpeg;base64,' + result.photo;
+                    savePhotoBtn.style.display = 'none';
+                    selectedFile = null;
+                    // Update localStorage
+                    currentAdmin.photo = result.photo;
+                    localStorage.setItem('admin', JSON.stringify(currentAdmin));
+                } else {
+                    alert('Failed to update profile photo: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Error uploading photo:', error);
+                alert('Error uploading profile photo.');
+            }
+        });
+    </script>
+</body>
+</html>

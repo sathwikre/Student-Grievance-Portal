@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Grievance System | Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        /* Your original CSS remains unchanged */
+         /*mongosh, use your_database_name, db.complaints.find().pretty(),db.complaints.deleteOne({_id: ObjectId("id")})*/
+        :root {
+            --primary-color: #4361ee;
+            --primary-light: #e0e7ff;
+            --secondary-color: #3a0ca3;
+            --accent-color: #4895ef;
+            --dark-color: #1a1a2e;
+            --light-color: #f8f9fa;
+            --gray-color: #6c757d;
+            --border-radius: 16px;
+            --border-radius-sm: 8px;
+            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            --gradient: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background-color: #f9fafc; color: var(--dark-color); min-height: 100vh; display: flex; flex-direction: column; }
+        header { background: white; padding: 20px 0; box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .header-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; text-decoration: none; }
+        .logo-icon { width: 40px; height: 40px; background: var(--gradient); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; font-weight: bold; margin-right: 12px; }
+        .logo-text h1 { font-size: 1.5rem; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .auth-toggle { display: flex; justify-content: center; margin-bottom: 30px; }
+        .auth-toggle-btn { background: none; border: none; padding: 12px 24px; font-size: 1.1rem; font-weight: 600; color: var(--gray-color); cursor: pointer; position: relative; transition: var(--transition); }
+        .auth-toggle-btn.active { color: var(--primary-color); }
+        .auth-toggle-btn.active::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 80%; height: 3px; background: var(--primary-color); border-radius: 3px; }
+        .main-content { flex: 1; display: flex; align-items: center; padding: 60px 0; }
+        .hero-container { display: flex; align-items: center; gap: 50px; width: 100%; }
+        .hero-content { flex: 1; }
+        .hero-content h1 { font-size: 2.8rem; margin-bottom: 20px; line-height: 1.2; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-content p { font-size: 1.1rem; color: var(--gray-color); margin-bottom: 30px; }
+        .auth-cards { flex: 1; display: flex; gap: 30px; }
+        .auth-card { background: white; border-radius: var(--border-radius); padding: 40px; box-shadow: var(--box-shadow); width: 100%; transition: var(--transition); display: none; }
+        .auth-card.active { display: block; }
+        .auth-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); }
+        .auth-card h2 { color: var(--primary-color); margin-bottom: 25px; font-size: 1.5rem; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; }
+        .form-group input, .form-group select { width: 100%; padding: 14px 20px; border: 1px solid #ddd; border-radius: var(--border-radius-sm); font-family: 'Poppins', sans-serif; transition: var(--transition); }
+        .form-group input:focus, .form-group select:focus { border-color: var(--primary-color); outline: none; box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2); }
+        .btn { display: inline-block; padding: 14px 28px; background: var(--gradient); color: white; border: none; border-radius: var(--border-radius-sm); font-weight: 600; cursor: pointer; transition: var(--transition); width: 100%; text-align: center; margin-top: 10px; }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(67, 97, 238, 0.4); }
+        .btn-secondary { background: white; color: var(--primary-color); border: 1px solid var(--primary-color); }
+        .btn-secondary:hover { background: var(--primary-light); box-shadow: none; }
+        .form-footer { text-align: center; margin-top: 20px; font-size: 0.9rem; color: var(--gray-color); }
+        .form-footer a { color: var(--primary-color); text-decoration: none; cursor: pointer; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: flex-start; padding: 40px 20px; overflow-y: auto; }
+        .modal.active { display: flex; }
+        .modal-content { background: white; border-radius: var(--border-radius); padding: 40px; width: 100%; max-width: 500px; box-shadow: var(--box-shadow); position: relative; animation: modalFadeIn 0.3s ease-out; margin: auto; }
+        @keyframes modalFadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        .close-modal { position: absolute; top: 20px; right: 20px; font-size: 1.5rem; color: var(--gray-color); cursor: pointer; transition: var(--transition); }
+        .close-modal:hover { color: var(--dark-color); }
+        footer { background: var(--dark-color); color: white; padding: 20px 0; text-align: center; font-size: 0.9rem; }
+        @media (max-width: 992px) { .hero-container { flex-direction: column; } .auth-cards { width: 100%; } }
+        @media (max-width: 768px) { .auth-cards { flex-direction: column; } .hero-content h1 { font-size: 2.2rem; } .modal { padding: 20px 10px; align-items: flex-start; } .modal-content { padding: 30px 20px; } }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">SGS</div>
+                <div class="logo-text"><h1>Student Grievance System</h1></div>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="hero-container animate__animated animate__fadeIn">
+                <div class="hero-content">
+                    <h1>Student Grievance Portal</h1>
+                    <p>Submit and track your complaints with our secure system. Get quick resolutions from your institution's administration team.</p>
+                </div>
+                <div class="auth-cards">
+                    <!-- Login/Signup Toggle -->
+                    <!-- Student Login Card -->
+                    <div class="auth-card active" id="studentLogin">
+                        <h2><i class="fas fa-user-graduate"></i> Student Login</h2>
+                        <form id="studentForm">
+                            <div class="form-group"><label>Email</label><input type="email" id="studentEmail" placeholder="student@college.edu" required></div>
+                            <div class="form-group"><label>Password</label><input type="password" id="studentPassword" placeholder="••••••••" required></div>
+                            <button type="submit" class="btn">Login</button>
+                        </form>
+                        <div class="form-footer">New student? <a id="showSignup">Create account</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signupModal">
+        <div class="modal-content animate__animated animate__fadeInUp">
+            <span class="close-modal">&times;</span>
+            <h2><i class="fas fa-user-plus"></i> Student Sign Up</h2>
+            <form id="signupForm">
+                <div class="form-group"><label>Full Name</label><input type="text" id="signupName" placeholder="John Doe" required></div>
+                <div class="form-group"><label>Email</label><input type="email" id="signupEmail" placeholder="student@college.edu" required></div>
+                <div class="form-group"><label>Student ID</label><input type="text" id="signupStudentId" placeholder="123456" required></div>
+                <div class="form-group"><label>Department</label>
+                    <select id="signupDepartment" required>
+                        <option value="">Select department</option>
+                        <option value="computer">Computer Science</option>
+                        <option value="electrical">Electrical Engineering</option>
+                        <option value="mechanical">Mechanical Engineering</option>
+                        <option value="civil">Civil Engineering</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Password</label><input type="password" id="signupPassword" placeholder="••••••••" required></div>
+                <div class="form-group"><label>Confirm Password</label><input type="password" id="signupConfirmPassword" placeholder="••••••••" required></div>
+                <button type="submit" class="btn">Create Account</button>
+                <div class="form-footer">Already have an account? <a id="showLogin">Login here</a></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Student Grievance System. All rights reserved.</p>
+           
+        </div>
+    </footer>
+
+    <!-- JS: Connect to backend -->
+    <script>
+        const toggleButtons = document.querySelectorAll('.auth-toggle-btn');
+        const authCards = document.querySelectorAll('.auth-card');
+        
+        toggleButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                toggleButtons.forEach(btn => btn.classList.remove('active'));
+                authCards.forEach(card => card.classList.remove('active'));
+                
+                button.classList.add('active');
+                const targetCard = document.getElementById(button.dataset.target);
+                targetCard.classList.add('active');
+            });
+        });
+
+        document.getElementById('showSignup').addEventListener('click', () => {
+            document.getElementById('signupModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        document.getElementById('showLogin').addEventListener('click', () => {
+            document.getElementById('signupModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        document.querySelector('.close-modal').addEventListener('click', () => {
+            document.getElementById('signupModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        window.addEventListener('click', (e) => {
+            if (e.target === document.getElementById('signupModal')) {
+                document.getElementById('signupModal').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Signup
+       document.getElementById('signupForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById('signupName').value.trim();
+    const email = document.getElementById('signupEmail').value.trim();
+    const studentId = document.getElementById('signupStudentId').value.trim();
+    const department = document.getElementById('signupDepartment').value;
+    const password = document.getElementById('signupPassword').value;
+    const confirmPassword = document.getElementById('signupConfirmPassword').value;
+
+    if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+    }
+
+    try {
+const response = await fetch("http://localhost:9000/api/auth/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                username: name,
+                email,
+                password,
+                role: "student",
+                studentId,
+                department
+            })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            alert("✅ Account created successfully! Please login.");
+            document.getElementById('signupModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+            console.log("Signup Success:", data);
+        } else {
+            alert(`❌ Error: ${data.message}`);
+            console.error("Signup Error:", data);
+        }
+    } catch (err) {
+        alert("❌ Network error. Check backend server.");
+        console.error("Network Error:", err);
+    }
+});
+
+        // Student Login
+       document.getElementById('studentForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById('studentEmail').value.trim();
+    const password = document.getElementById('studentPassword').value;
+
+        try {
+                const response = await fetch("http://localhost:9000/api/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            alert("✅ Login successful!");
+            console.log("Login Success:", data);
+            // Save student info to localStorage and redirect to dashboard
+            localStorage.setItem('student', JSON.stringify(data.user));
+            // Redirect to student.html
+            window.location.href = 'student.html';
+        } else {
+            alert(`❌ Login failed: ${data.message}`);
+            console.error("Login Error:", data);
+        }
+    } catch (err) {
+        alert("❌ Network error. Check backend server.");
+        console.error("Network Error:", err);
+    }
+});
+
+        // Admin Login
+       document.getElementById('adminForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById('adminEmail').value.trim();
+    const password = document.getElementById('adminPassword').value;
+    const department = document.getElementById('adminDept').value;
+
+    try {
+        const response = await fetch("http://localhost:9000/api/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            alert(`✅ Admin login successful! Welcome ${data.user.username}`);
+            console.log("Admin Login Success:", data);
+            // Save admin info to localStorage and redirect to admin dashboard
+            localStorage.setItem('admin', JSON.stringify(data.user));
+            // Pass admin username and profile image to admin.html via localStorage
+            localStorage.setItem('adminUserName', data.user.username);
+            localStorage.setItem('adminUserImage', data.user.profileImage || 'https://randomuser.me/api/portraits/men/32.jpg');
+            window.location.href = 'admin.html';
+        } else {
+            alert(`❌ Login failed: ${data.message}`);
+            console.error("Admin Login Error:", data);
+        }
+    } catch (err) {
+        alert("❌ Network error. Check backend server.");
+        console.error("Network Error:", err);
+    }
+});
+
+    </script>
+</body>
+</html>
+
