@@ -3,11 +3,28 @@ import Complaint from "../models/Complaint.js";
 import Admin from "../models/Admin.js";
 import { sendMail } from "../utils/mailer.js";
 import multer from "multer";
+import path from "path";
+import fs from "fs";
 
 const router = express.Router();
 
-// Multer setup for file uploads
-const storage = multer.memoryStorage();
+// Ensure uploads directory exists
+const uploadsDir = path.join(process.cwd(), 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
+// Multer setup for file uploads - now saving to disk
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, uploadsDir);
+    },
+    filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, uniqueSuffix + path.extname(file.originalname));
+    }
+});
+
 const fileFilter = (req, file, cb) => {
     // Accept images, PDFs, and common document types
     const allowedTypes = [
@@ -110,7 +127,7 @@ router.post("/", upload.array('files'), async (req, res) => {
         const attachments = req.files ? req.files.map(file => ({
             filename: file.originalname,
             contentType: file.mimetype,
-            data: file.buffer
+            path: file.path // Store the file path instead of buffer
         })) : [];
 
         const newComplaint = new Complaint({

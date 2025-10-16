@@ -510,6 +510,10 @@
                     <i class="fas fa-question-circle"></i>
                     <span>Help</span>
                 </a>
+                <a href="#" class="menu-item" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
             </div>
         </div>
 
@@ -658,7 +662,7 @@
                                 <th>Date</th>
                                 <th>Status</th>
                                 <th>Last Update</th>
-                                <th>Actions</th>
+                               
                             </tr>
                         </thead>
                         <tbody>
@@ -895,6 +899,34 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = '/index.html';
         return;
     }
+
+    // Logout functionality
+    document.getElementById('logoutBtn').addEventListener('click', async function(e) {
+        e.preventDefault();
+        try {
+            const response = await fetch('http://localhost:9000/api/auth/logout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            if (response.ok) {
+                localStorage.removeItem('student');
+                localStorage.removeItem('studentPhoto');
+                alert('Logged out successfully!');
+                window.location.href = '/index.html';
+            } else {
+                alert('Logout failed, but redirecting anyway.');
+                localStorage.removeItem('student');
+                localStorage.removeItem('studentPhoto');
+                window.location.href = '/index.html';
+            }
+        } catch (err) {
+            console.error('Logout error:', err);
+            alert('Network error during logout, but redirecting anyway.');
+            localStorage.removeItem('student');
+            localStorage.removeItem('studentPhoto');
+            window.location.href = '/index.html';
+        }
+    });
 
     const studentId = student.studentId || student.id || student._id;
     const name = student.username || student.name;
@@ -1220,57 +1252,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<script>
-    // Profile photo change functionality for student.html
-    const changePhotoBtn = document.getElementById('changePhotoBtn');
-    const savePhotoBtn = document.getElementById('savePhotoBtn');
-    const profilePhotoInput = document.getElementById('profilePhotoInput');
-    const studentProfilePhoto = document.getElementById('studentProfilePhoto');
-    let selectedFile = null;
 
-    changePhotoBtn.addEventListener('click', function() {
-        profilePhotoInput.click();
-    });
-
-    profilePhotoInput.addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        if (file) {
-            selectedFile = file;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                studentProfilePhoto.src = e.target.result;
-                savePhotoBtn.style.display = 'inline-block';
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-
-    savePhotoBtn.addEventListener('click', async function() {
-        if (!selectedFile) return;
-        const formData = new FormData();
-        formData.append('photo', selectedFile);
-        const student = JSON.parse(localStorage.getItem('student'));
-        formData.append('email', student.email); // Use email for identification
-        try {
-            const response = await fetch('http://localhost:9000/api/auth/upload-photo', {
-                method: 'POST',
-                body: formData
-            });
-            const result = await response.json();
-            if (response.ok) {
-                alert('Profile photo updated successfully!');
-                studentProfilePhoto.src = 'data:image/jpeg;base64,' + result.photo;
-                savePhotoBtn.style.display = 'none';
-                selectedFile = null;
-            } else {
-                alert('Failed to update photo: ' + result.message);
-            }
-        } catch (error) {
-            console.error('Error uploading photo:', error);
-            alert('Error uploading photo.');
-        }
-    });
-</script>
 
 </body>
 </html>

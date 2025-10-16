@@ -9,7 +9,9 @@ const userSchema = new mongoose.Schema({
     role: { type: String, enum: ["student", "admin"], default: "student" },
     studentId: { type: String },        // Only for students
     department: { type: String },       // Students or admins
-    photo: { type: String } // base64 image
+    photo: { type: String }, // base64 image
+    resetCode: { type: String }, // Verification code for password reset
+    resetCodeExpiry: { type: Date } // Expiry time for the reset code
 }, { timestamps: true });
 
 // Hash password before saving

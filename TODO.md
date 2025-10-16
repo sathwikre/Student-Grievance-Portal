@@ -1,3 +1,0 @@
-- [x] Add search endpoint in backend/routes/complaint.js for searching complaints by type
-- [x] Update admin.html search filter to search by type instead of id
-- [x] Update student.html search filter to search only by type

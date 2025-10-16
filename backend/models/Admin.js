@@ -6,7 +6,9 @@ const adminSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     department: { type: String, required: true },
-    photo: { type: String } // base64 image or URL
+    photo: { type: String }, // base64 image or URL
+    resetCode: { type: String }, // Verification code for password reset
+    resetCodeExpiry: { type: Date } // Expiry time for the reset code
 }, { timestamps: true });
 
 // Hash password before saving

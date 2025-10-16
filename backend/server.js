@@ -30,6 +30,7 @@ const upload = multer({ storage: storage });
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "../frontend"))); // serve frontend
+app.use('/uploads', express.static(path.join(__dirname, "../uploads"))); // serve uploaded files
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI, {

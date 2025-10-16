@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Code - Student Grievance Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 5px;
+        }
+        input {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .message {
+            margin-top: 15px;
+            text-align: center;
+            color: red;
+        }
+        .success {
+            color: green;
+        }
+        a {
+            text-align: center;
+            display: block;
+            margin-top: 10px;
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Verify Reset Code</h2>
+        <form id="verifyForm">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" readonly>
+            <label for="code">Enter the 6-digit code:</label>
+            <input type="text" id="code" name="code" maxlength="6" required>
+            <button type="submit">Verify Code</button>
+        </form>
+        <div id="message" class="message"></div>
+        <a href="forgot-password.html">Back</a>
+    </div>
+
+    <script>
+        // Get email from URL params
+        const urlParams = new URLSearchParams(window.location.search);
+        const email = urlParams.get('email');
+        if (email) {
+            document.getElementById('email').value = email;
+        }
+
+        document.getElementById('verifyForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const code = document.getElementById('code').value;
+            const messageDiv = document.getElementById('message');
+
+            try {
+                const response = await fetch('/api/auth/verify-reset-code', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, code })
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    messageDiv.textContent = data.message;
+                    messageDiv.className = 'message success';
+                    // Redirect to reset password page
+                    setTimeout(() => {
+                        window.location.href = `reset-password.html?email=${encodeURIComponent(email)}&code=${encodeURIComponent(code)}`;
+                    }, 2000);
+                } else {
+                    messageDiv.textContent = data.message;
+                    messageDiv.className = 'message';
+                }
+            } catch (error) {
+                messageDiv.textContent = 'An error occurred. Please try again.';
+                messageDiv.className = 'message';
+            }
+        });
+    </script>
+</body>
+</html>

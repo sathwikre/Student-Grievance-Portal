@@ -12,7 +12,7 @@ const complaintSchema = new mongoose.Schema({
     attachments: [{
         filename: { type: String, required: true },
         contentType: { type: String, required: true },
-        data: { type: Buffer, required: true }
+        path: { type: String, required: true }
     }]
 }, { timestamps: true });
 

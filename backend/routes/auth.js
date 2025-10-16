@@ -1,7 +1,9 @@
 import express from "express";
 import bcrypt from "bcryptjs";
+import crypto from "crypto";
 import User from "../models/User.js";
 import Admin from "../models/Admin.js";
+import { sendMail } from "../utils/mailer.js";
 
 const router = express.Router();
 
@@ -256,6 +258,133 @@ export default function(authUpload) {
       console.error("Update profile error:", err);
       res.status(500).json({ message: "Server error" });
     }
+  });
+
+  // --------------------
+  // Forgot Password
+  // --------------------
+  router.post("/forgot-password", async (req, res) => {
+    const { email } = req.body;
+    if (!email) {
+      return res.status(400).json({ message: "Email is required" });
+    }
+    const trimmedEmail = email.trim().toLowerCase();
+
+    try {
+      // Check if user is student or admin
+      let user = await User.findOne({ email: trimmedEmail });
+      let isAdmin = false;
+      if (!user) {
+        user = await Admin.findOne({ email: trimmedEmail });
+        isAdmin = true;
+      }
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Generate 6-digit code
+      const resetCode = crypto.randomInt(100000, 999999).toString();
+      const expiry = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+
+      // Save to DB
+      user.resetCode = resetCode;
+      user.resetCodeExpiry = expiry;
+      await user.save();
+
+      // Send email
+      const subject = "Password Reset Code";
+      const text = `Your password reset code is: ${resetCode}. It expires in 10 minutes.`;
+      await sendMail(trimmedEmail, subject, text);
+
+      res.status(200).json({ message: "Reset code sent to your email" });
+    } catch (err) {
+      console.error("Forgot password error:", err);
+      res.status(500).json({ message: "Server error" });
+    }
+  });
+
+  // --------------------
+  // Verify Reset Code
+  // --------------------
+  router.post("/verify-reset-code", async (req, res) => {
+    const { email, code } = req.body;
+    if (!email || !code) {
+      return res.status(400).json({ message: "Email and code are required" });
+    }
+    const trimmedEmail = email.trim().toLowerCase();
+
+    try {
+      // Check if user is student or admin
+      let user = await User.findOne({ email: trimmedEmail });
+      let isAdmin = false;
+      if (!user) {
+        user = await Admin.findOne({ email: trimmedEmail });
+        isAdmin = true;
+      }
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      if (user.resetCode !== code || user.resetCodeExpiry < new Date()) {
+        return res.status(400).json({ message: "Invalid or expired code" });
+      }
+
+      res.status(200).json({ message: "Code verified successfully" });
+    } catch (err) {
+      console.error("Verify code error:", err);
+      res.status(500).json({ message: "Server error" });
+    }
+  });
+
+  // --------------------
+  // Reset Password
+  // --------------------
+  router.post("/reset-password", async (req, res) => {
+    const { email, code, newPassword } = req.body;
+    if (!email || !code || !newPassword) {
+      return res.status(400).json({ message: "Email, code, and new password are required" });
+    }
+    const trimmedEmail = email.trim().toLowerCase();
+
+    try {
+      // Check if user is student or admin
+      let user = await User.findOne({ email: trimmedEmail });
+      let isAdmin = false;
+      if (!user) {
+        user = await Admin.findOne({ email: trimmedEmail });
+        isAdmin = true;
+      }
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      if (user.resetCode !== code || user.resetCodeExpiry < new Date()) {
+        return res.status(400).json({ message: "Invalid or expired code" });
+      }
+
+      // Set new password (plain text) - pre-save hook in model will hash it
+      user.password = newPassword.trim();
+
+      // Clear reset fields
+      user.resetCode = undefined;
+      user.resetCodeExpiry = undefined;
+
+      await user.save();
+
+      res.status(200).json({ message: "Password reset successfully" });
+    } catch (err) {
+      console.error("Reset password error:", err);
+      res.status(500).json({ message: "Server error" });
+    }
+  });
+
+  // --------------------
+  // Logout
+  // --------------------
+  router.post("/logout", (req, res) => {
+    // Since we're using stateless authentication (no sessions), just return success
+    // Client-side will handle clearing localStorage and redirecting
+    res.status(200).json({ message: "Logout successful" });
   });
 
   return router;
