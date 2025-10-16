@@ -8,65 +8,375 @@
     <title>Student Grievance System | Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="modern-blue-styles.css">
+    <link rel="stylesheet" href="modern-blue-styles.css" />
     <style>
-        /* Your original CSS remains unchanged */
-         /*mongosh, use your_database_name, db.complaints.find().pretty(),db.complaints.deleteOne({_id: ObjectId("id")})*/
         :root {
-            --primary-color: #4361ee;
-            --primary-light: #e0e7ff;
-            --secondary-color: #3a0ca3;
-            --accent-color: #4895ef;
-            --dark-color: #1a1a2e;
-            --light-color: #f8f9fa;
-            --gray-color: #6c757d;
-            --border-radius: 16px;
-            --border-radius-sm: 8px;
-            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-            --gradient: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+            --primary: #0B5FFF;
+            --secondary: #0EA5A4;
+            --accent: #FF6B6B;
+            --background: #F5F8FF;
+            --surface: #FFFFFF;
+            --text-primary: #1A1A1A;
+            --text-secondary: #6B7280;
+            --border: #E5E7EB;
+            --shadow: rgba(11, 95, 255, 0.1);
+            --shadow-hover: rgba(11, 95, 255, 0.2);
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --error-color: #EF4444;
+            --radius-lg: 12px;
+            --radius-sm: 8px;
+            --font-family: 'Poppins', sans-serif;
+            --transition: all 0.3s ease;
         }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Poppins', sans-serif; background-color: #f9fafc; color: var(--dark-color); min-height: 100vh; display: flex; flex-direction: column; }
-        header { background: white; padding: 20px 0; box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05); }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--background);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Subtle background pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(11, 95, 255, 0.03) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(14, 165, 164, 0.03) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+        }
+
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
         .header-container { display: flex; justify-content: space-between; align-items: center; }
-        .logo { display: flex; align-items: center; text-decoration: none; }
-        .logo-icon { width: 40px; height: 40px; background: var(--gradient); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; font-weight: bold; margin-right: 12px; }
-        .logo-text h1 { font-size: 1.5rem; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .auth-toggle { display: flex; justify-content: center; margin-bottom: 30px; }
-        .auth-toggle-btn { background: none; border: none; padding: 12px 24px; font-size: 1.1rem; font-weight: 600; color: var(--gray-color); cursor: pointer; position: relative; transition: var(--transition); }
-        .auth-toggle-btn.active { color: var(--primary-color); }
-        .auth-toggle-btn.active::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 80%; height: 3px; background: var(--primary-color); border-radius: 3px; }
-        .main-content { flex: 1; display: flex; align-items: center; padding: 60px 0; }
-        .hero-container { display: flex; align-items: center; gap: 50px; width: 100%; }
-        .hero-content { flex: 1; }
-        .hero-content h1 { font-size: 2.8rem; margin-bottom: 20px; line-height: 1.2; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero-content p { font-size: 1.1rem; color: var(--gray-color); margin-bottom: 30px; }
-        .auth-cards { flex: 1; display: flex; gap: 30px; }
-        .auth-card { background: white; border-radius: var(--border-radius); padding: 40px; box-shadow: var(--box-shadow); width: 100%; transition: var(--transition); display: none; }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .logo:hover { transform: scale(1.05); }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-right: 15px;
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .logo-text h1 {
+            font-size: 1.8rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 60px 0;
+            position: relative;
+        }
+
+        .hero-container {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero-content {
+            flex: 1;
+            animation: slideInLeft 1s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .hero-content h1 {
+            font-size: 3.2rem;
+            margin-bottom: 25px;
+            line-height: 1.1;
+            color: var(--text-primary);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 35px;
+            line-height: 1.6;
+        }
+
+        .auth-cards {
+            flex: 1;
+            display: flex;
+            gap: 30px;
+            animation: slideInRight 1s ease-out 0.3s both;
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .auth-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 45px;
+            box-shadow: 0 4px 20px var(--shadow);
+            width: 100%;
+            transition: var(--transition);
+            display: none;
+            border: 1px solid var(--border);
+        }
+
         .auth-card.active { display: block; }
-        .auth-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); }
-        .auth-card h2 { color: var(--primary-color); margin-bottom: 25px; font-size: 1.5rem; }
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; }
-        .form-group input, .form-group select { width: 100%; padding: 14px 20px; border: 1px solid #ddd; border-radius: var(--border-radius-sm); font-family: 'Poppins', sans-serif; transition: var(--transition); }
-        .form-group input:focus, .form-group select:focus { border-color: var(--primary-color); outline: none; box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2); }
-        .btn { display: inline-block; padding: 14px 28px; background: var(--gradient); color: white; border: none; border-radius: var(--border-radius-sm); font-weight: 600; cursor: pointer; transition: var(--transition); width: 100%; text-align: center; margin-top: 10px; }
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(67, 97, 238, 0.4); }
-        .btn-secondary { background: white; color: var(--primary-color); border: 1px solid var(--primary-color); }
-        .btn-secondary:hover { background: var(--primary-light); box-shadow: none; }
-        .form-footer { text-align: center; margin-top: 20px; font-size: 0.9rem; color: var(--gray-color); }
-        .form-footer a { color: var(--primary-color); text-decoration: none; cursor: pointer; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: flex-start; padding: 40px 20px; overflow-y: auto; }
+
+        .auth-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px var(--shadow-hover);
+        }
+
+        .auth-card h2 {
+            color: var(--primary);
+            margin-bottom: 30px;
+            font-size: 1.6rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .auth-card h2 i {
+            color: var(--secondary);
+        }
+
+        .form-group { margin-bottom: 25px; }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-family: var(--font-family);
+            font-size: 1rem;
+            transition: var(--transition);
+            background: var(--surface);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(11, 95, 255, 0.1);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 16px 32px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            text-align: center;
+            margin-top: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before { left: 100%; }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow-hover);
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .form-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .form-footer a:hover {
+            color: var(--secondary);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
         .modal.active { display: flex; }
-        .modal-content { background: white; border-radius: var(--border-radius); padding: 40px; width: 100%; max-width: 500px; box-shadow: var(--box-shadow); position: relative; animation: modalFadeIn 0.3s ease-out; margin: auto; }
-        @keyframes modalFadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        .close-modal { position: absolute; top: 20px; right: 20px; font-size: 1.5rem; color: var(--gray-color); cursor: pointer; transition: var(--transition); }
-        .close-modal:hover { color: var(--dark-color); }
-        footer { background: var(--dark-color); color: white; padding: 20px 0; text-align: center; font-size: 0.9rem; }
-        @media (max-width: 992px) { .hero-container { flex-direction: column; } .auth-cards { width: 100%; } }
-        @media (max-width: 768px) { .auth-cards { flex-direction: column; } .hero-content h1 { font-size: 2.2rem; } .modal { padding: 20px 10px; align-items: flex-start; } .modal-content { padding: 30px 20px; } }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 45px;
+            width: 100%;
+            max-width: 520px;
+            box-shadow: 0 8px 25px var(--shadow-hover);
+            position: relative;
+            animation: scaleIn 0.3s ease-out;
+            border: 1px solid var(--border);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.8rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(107, 114, 128, 0.1);
+        }
+
+        .close-modal:hover {
+            color: var(--text-primary);
+            background: rgba(107, 114, 128, 0.2);
+        }
+
+        footer {
+            background: var(--surface);
+            color: var(--text-secondary);
+            padding: 25px 0;
+            text-align: center;
+            font-size: 0.95rem;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero-container { flex-direction: column; gap: 40px; }
+            .auth-cards { width: 100%; max-width: 500px; }
+            .hero-content h1 { font-size: 2.8rem; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-container { gap: 30px; padding: 0 15px; }
+            .auth-cards { flex-direction: column; gap: 20px; }
+            .hero-content h1 { font-size: 2.4rem; }
+            .hero-content p { font-size: 1.1rem; }
+            .auth-card { padding: 35px 25px; }
+            .modal-content { padding: 35px 25px; margin: 20px; }
+            .header-container { flex-direction: column; gap: 15px; }
+            .logo-text h1 { font-size: 1.5rem; }
+        }
+
+        @media (max-width: 576px) {
+            .main-content { padding: 40px 0; }
+            .hero-content h1 { font-size: 2rem; }
+            .hero-content p { font-size: 1rem; }
+            .auth-card { padding: 30px 20px; }
+            .form-group input, .form-group select { padding: 14px 16px; }
+            .btn { padding: 14px 28px; }
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -80,25 +390,39 @@
         </div>
     </header>
 
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">
+        <i class="fas fa-moon"></i>
+    </button>
+
     <!-- Main Content -->
     <main class="main-content">
-        <div class="container">
-            <div class="hero-container animate__animated animate__fadeIn">
-                <div class="hero-content">
-                    <h1>Student Grievance Portal</h1>
-                    <p>Submit and track your complaints with our secure system. Get quick resolutions from your institution's administration team.</p>
-                </div>
-                <div class="auth-cards">
-                    <!-- Login/Signup Toggle -->
-                    <!-- Student Login Card -->
-                    <div class="auth-card active" id="studentLogin">
-                        <h2><i class="fas fa-user-graduate"></i> Student Login</h2>
-                        <form id="studentForm">
-                            <div class="form-group"><label>Email</label><input type="email" id="studentEmail" placeholder="student@college.edu" required></div>
-                            <div class="form-group"><label>Password</label><input type="password" id="studentPassword" placeholder="••••••••" required></div>
-                            <button type="submit" class="btn">Login</button>
-                        </form>
-                        <div class="form-footer">New student? <a id="showSignup">Create account</a> | <a href="forgot-password.html">Forgot Password?</a></div>
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Student Grievance Portal</h1>
+                <p>Submit and track your complaints with our secure system. Get quick resolutions from your institution's administration team.</p>
+            </div>
+            <div class="auth-cards">
+                <!-- Student Login Card -->
+                <div class="auth-card active" id="studentLogin">
+                    <h2><i class="fas fa-user-graduate"></i> Student Login</h2>
+                    <form id="studentForm">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="studentEmail" placeholder="student@college.edu" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" id="studentPassword" placeholder="••••••••" required>
+                        </div>
+                        <button type="submit" class="btn">
+                            <span class="btn-text">Login</span>
+                            <span class="loading" style="display: none;"></span>
+                        </button>
+                    </form>
+                    <div class="form-footer">
+                        New student? <a id="showSignup">Create account</a> |
+                        <a href="forgot-password.html">Forgot Password?</a>
                     </div>
                 </div>
             </div>
@@ -107,14 +431,24 @@
 
     <!-- Signup Modal -->
     <div class="modal" id="signupModal">
-        <div class="modal-content animate__animated animate__fadeInUp">
+        <div class="modal-content">
             <span class="close-modal">&times;</span>
             <h2><i class="fas fa-user-plus"></i> Student Sign Up</h2>
             <form id="signupForm">
-                <div class="form-group"><label>Full Name</label><input type="text" id="signupName" placeholder="John Doe" required></div>
-                <div class="form-group"><label>Email</label><input type="email" id="signupEmail" placeholder="student@college.edu" required></div>
-                <div class="form-group"><label>Student ID</label><input type="text" id="signupStudentId" placeholder="123456" required></div>
-                <div class="form-group"><label>Department</label>
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="signupName" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="signupEmail" placeholder="student@college.edu" required>
+                </div>
+                <div class="form-group">
+                    <label>Student ID</label>
+                    <input type="text" id="signupStudentId" placeholder="123456" required>
+                </div>
+                <div class="form-group">
+                    <label>Department</label>
                     <select id="signupDepartment" required>
                         <option value="">Select department</option>
                         <option value="computer">Computer Science</option>
@@ -123,9 +457,18 @@
                         <option value="civil">Civil Engineering</option>
                     </select>
                 </div>
-                <div class="form-group"><label>Password</label><input type="password" id="signupPassword" placeholder="••••••••" required></div>
-                <div class="form-group"><label>Confirm Password</label><input type="password" id="signupConfirmPassword" placeholder="••••••••" required></div>
-                <button type="submit" class="btn">Create Account</button>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="signupPassword" placeholder="••••••••" required>
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" id="signupConfirmPassword" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn">
+                    <span class="btn-text">Create Account</span>
+                    <span class="loading" style="display: none;"></span>
+                </button>
                 <div class="form-footer">Already have an account? <a id="showLogin">Login here</a></div>
             </form>
         </div>
@@ -175,84 +518,109 @@
         });
 
         // Signup
-       document.getElementById('signupForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
+        document.getElementById('signupForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
 
-    const name = document.getElementById('signupName').value.trim();
-    const email = document.getElementById('signupEmail').value.trim();
-    const studentId = document.getElementById('signupStudentId').value.trim();
-    const department = document.getElementById('signupDepartment').value;
-    const password = document.getElementById('signupPassword').value;
-    const confirmPassword = document.getElementById('signupConfirmPassword').value;
+            const btn = e.target.querySelector('.btn');
+            const btnText = btn.querySelector('.btn-text');
+            const loading = btn.querySelector('.loading');
+            btnText.style.display = 'none';
+            loading.style.display = 'inline-block';
+            btn.disabled = true;
 
-    if (password !== confirmPassword) {
-        alert("Passwords do not match!");
-        return;
-    }
+            const name = document.getElementById('signupName').value.trim();
+            const email = document.getElementById('signupEmail').value.trim();
+            const studentId = document.getElementById('signupStudentId').value.trim();
+            const department = document.getElementById('signupDepartment').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('signupConfirmPassword').value;
 
-    try {
-const response = await fetch("http://localhost:9000/api/auth/register", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                username: name,
-                email,
-                password,
-                role: "student",
-                studentId,
-                department
-            })
+            if (password !== confirmPassword) {
+                alert("Passwords do not match!");
+                btnText.style.display = 'inline';
+                loading.style.display = 'none';
+                btn.disabled = false;
+                return;
+            }
+
+            try {
+                const response = await fetch("http://localhost:9000/api/auth/register", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        username: name,
+                        email,
+                        password,
+                        role: "student",
+                        studentId,
+                        department
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert("✅ Account created successfully! Please login.");
+                    document.getElementById('signupModal').classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    console.log("Signup Success:", data);
+                } else {
+                    alert(`❌ Error: ${data.message}`);
+                    console.error("Signup Error:", data);
+                }
+            } catch (err) {
+                alert("❌ Network error. Check backend server.");
+                console.error("Network Error:", err);
+            } finally {
+                btnText.style.display = 'inline';
+                loading.style.display = 'none';
+                btn.disabled = false;
+            }
         });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            alert("✅ Account created successfully! Please login.");
-            document.getElementById('signupModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-            console.log("Signup Success:", data);
-        } else {
-            alert(`❌ Error: ${data.message}`);
-            console.error("Signup Error:", data);
-        }
-    } catch (err) {
-        alert("❌ Network error. Check backend server.");
-        console.error("Network Error:", err);
-    }
-});
 
         // Student Login
-       document.getElementById('studentForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
+        document.getElementById('studentForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
 
-    const email = document.getElementById('studentEmail').value.trim();
-    const password = document.getElementById('studentPassword').value;
+            const btn = e.target.querySelector('.btn');
+            const btnText = btn.querySelector('.btn-text');
+            const loading = btn.querySelector('.loading');
+            btnText.style.display = 'none';
+            loading.style.display = 'inline-block';
+            btn.disabled = true;
 
-        try {
+            const email = document.getElementById('studentEmail').value.trim();
+            const password = document.getElementById('studentPassword').value;
+
+            try {
                 const response = await fetch("http://localhost:9000/api/auth/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password })
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert("✅ Login successful!");
+                    console.log("Login Success:", data);
+                    // Save student info to localStorage and redirect to dashboard
+                    localStorage.setItem('student', JSON.stringify(data.user));
+                    // Redirect to student.html
+                    window.location.href = 'student.html';
+                } else {
+                    alert(`❌ Login failed: ${data.message}`);
+                    console.error("Login Error:", data);
+                }
+            } catch (err) {
+                alert("❌ Network error. Check backend server.");
+                console.error("Network Error:", err);
+            } finally {
+                btnText.style.display = 'inline';
+                loading.style.display = 'none';
+                btn.disabled = false;
+            }
         });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            alert("✅ Login successful!");
-            console.log("Login Success:", data);
-            // Save student info to localStorage and redirect to dashboard
-            localStorage.setItem('student', JSON.stringify(data.user));
-            // Redirect to student.html
-            window.location.href = 'student.html';
-        } else {
-            alert(`❌ Login failed: ${data.message}`);
-            console.error("Login Error:", data);
-        }
-    } catch (err) {
-        alert("❌ Network error. Check backend server.");
-        console.error("Network Error:", err);
-    }
-});
 
         // Admin Login
        document.getElementById('adminForm').addEventListener('submit', async function(e) {
@@ -289,6 +657,71 @@ const response = await fetch("http://localhost:9000/api/auth/register", {
         console.error("Network Error:", err);
     }
 });
+
+        // Dark Mode Toggle Functionality
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+        const icon = darkModeToggle.querySelector('i');
+
+        // Check for saved theme preference or default to light mode
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        if (currentTheme === 'dark') {
+            body.classList.add('dark-mode');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isDark = body.classList.contains('dark-mode');
+
+            // Update icon
+            if (isDark) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Admin Login
+        document.getElementById('adminForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('adminEmail').value.trim();
+            const password = document.getElementById('adminPassword').value;
+            const department = document.getElementById('adminDept').value;
+
+            try {
+                const response = await fetch("http://localhost:9000/api/auth/admin-login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password, department })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert(`✅ Admin login successful! Welcome ${data.user.username}`);
+                    console.log("Admin Login Success:", data);
+                    // Save admin info to localStorage and redirect to admin dashboard
+                    localStorage.setItem('admin', JSON.stringify(data.user));
+                    // Pass admin username and profile image to admin.html via localStorage
+                    localStorage.setItem('adminUserName', data.user.username);
+                    localStorage.setItem('adminUserImage', data.user.photo || 'https://randomuser.me/api/portraits/men/32.jpg');
+                    window.location.href = 'admin.html';
+                } else {
+                    alert(`❌ Login failed: ${data.message}`);
+                    console.error("Admin Login Error:", data);
+                }
+            } catch (err) {
+                alert("❌ Network error. Check backend server.");
+                console.error("Network Error:", err);
+            }
+        });
 
     </script>
 </body>

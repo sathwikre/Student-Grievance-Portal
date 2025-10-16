@@ -1,28 +1,28 @@
             <div id="profile" class="tab-content">
-                <div style="background:white; border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,0.07); padding:30px; max-width:500px; margin:auto;">
-                    <h2 style="margin-bottom:20px; color:#4361ee;"><i class="fas fa-user"></i> Profile</h2>
-                    <div style="display:flex; align-items:center; gap:20px; margin-bottom:20px;">
-                        <img id="profileTabPhoto" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile Photo" style="width:80px; height:80px; border-radius:50%; object-fit:cover;">
+                <div style="background:var(--glass-bg); backdrop-filter:blur(20px); border-radius:var(--border-radius); box-shadow:var(--box-shadow); padding:35px; max-width:500px; margin:auto; border:1px solid var(--glass-border); animation:fadeInScale 1s ease-out;">
+                    <h2 style="margin-bottom:25px; color:var(--primary-color);"><i class="fas fa-user"></i> Profile</h2>
+                    <div style="display:flex; align-items:center; gap:25px; margin-bottom:25px;">
+                        <img id="profileTabPhoto" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile Photo" style="width:90px; height:90px; border-radius:50%; object-fit:cover; box-shadow:0 8px 25px rgba(0,0,0,0.2);">
                         <div>
-                            <div style="font-size:1.2rem; font-weight:600;" id="profileTabName">Student Name</div>
-                            <div style="color:#888;" id="profileTabId">ID</div>
-                            <div style="color:#888;" id="profileTabEmail">Email</div>
+                            <div style="font-size:1.3rem; font-weight:700; color:var(--dark-color);" id="profileTabName">Student Name</div>
+                            <div style="color:#666; font-size:0.95rem;" id="profileTabId">ID</div>
+                            <div style="color:#666; font-size:0.95rem;" id="profileTabEmail">Email</div>
                         </div>
                     </div>
-                    <div style="margin-top:10px;">
-                        <strong>Department:</strong> <span id="profileTabDept">Department</span>
+                    <div style="margin-top:15px; padding:15px; background:rgba(67,97,238,0.1); border-radius:8px;">
+                        <strong style="color:var(--primary-color);">Department:</strong> <span id="profileTabDept" style="color:var(--dark-color); font-weight:500;">Department</span>
                     </div>
                 </div>
             </div>
             <div id="help" class="tab-content">
-                <div style="background:white; border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,0.07); padding:30px; max-width:600px; margin:auto;">
-                    <h2 style="margin-bottom:20px; color:#4361ee;"><i class="fas fa-question-circle"></i> Help & FAQ</h2>
-                    <ul style="font-size:1rem; color:#333;">
-                        <li><strong>How do I submit a complaint?</strong><br>Go to the "New Complaint" tab, fill out the form, and click "Submit Complaint".</li>
-                        <li style="margin-top:15px;"><strong>How do I view my complaints?</strong><br>Check the "Dashboard" or "My Complaints" tab for all your submitted complaints and their status.</li>
-                        <li style="margin-top:15px;"><strong>How do I update my profile photo?</strong><br>Click your profile photo at the top of the dashboard to upload a new image.</li>
-                        <li style="margin-top:15px;"><strong>Who can see my complaints?</strong><br>Only authorized admins and yourself can view your complaints.</li>
-                        <li style="margin-top:15px;"><strong>Need more help?</strong><br>Contact your college grievance cell or email support@college.edu.</li>
+                <div style="background:var(--glass-bg); backdrop-filter:blur(20px); border-radius:var(--border-radius); box-shadow:var(--box-shadow); padding:35px; max-width:600px; margin:auto; border:1px solid var(--glass-border); animation:fadeInScale 1s ease-out;">
+                    <h2 style="margin-bottom:25px; color:var(--primary-color);"><i class="fas fa-question-circle"></i> Help & FAQ</h2>
+                    <ul style="font-size:1.05rem; color:var(--dark-color); line-height:1.6;">
+                        <li style="margin-bottom:20px; padding:15px; background:rgba(67,97,238,0.05); border-radius:8px; border-left:4px solid var(--primary-color);"><strong>How do I submit a complaint?</strong><br>Go to the "New Complaint" tab, fill out the form, and click "Submit Complaint".</li>
+                        <li style="margin-bottom:20px; padding:15px; background:rgba(67,97,238,0.05); border-radius:8px; border-left:4px solid var(--primary-color);"><strong>How do I view my complaints?</strong><br>Check the "Dashboard" or "My Complaints" tab for all your submitted complaints and their status.</li>
+                        <li style="margin-bottom:20px; padding:15px; background:rgba(67,97,238,0.05); border-radius:8px; border-left:4px solid var(--primary-color);"><strong>How do I update my profile photo?</strong><br>Click your profile photo at the top of the dashboard to upload a new image.</li>
+                        <li style="margin-bottom:20px; padding:15px; background:rgba(67,97,238,0.05); border-radius:8px; border-left:4px solid var(--primary-color);"><strong>Who can see my complaints?</strong><br>Only authorized admins and yourself can view your complaints.</li>
+                        <li style="margin-bottom:20px; padding:15px; background:rgba(67,97,238,0.05); border-radius:8px; border-left:4px solid var(--primary-color);"><strong>Need more help?</strong><br>Contact your college grievance cell or email support@college.edu.</li>
                     </ul>
                 </div>
             </div>
@@ -32,20 +32,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Complaint Portal</title>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">
+        <i class="fas fa-moon"></i>
+    </button>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="modern-blue-styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="modern-blue-styles.css" />
     <style>
         :root {
-            --primary-color: #4361ee;
-            --secondary-color: #3f37c9;
-            --accent-color: #4895ef;
-            --light-color: #f8f9fa;
-            --dark-color: #212529;
-            --success-color: #4bb543;
-            --warning-color: #ff9800;
-            --error-color: #ff3333;
-            --border-radius: 12px;
-            --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            --primary: #0B5FFF;
+            --secondary: #0EA5A4;
+            --accent: #FF6B6B;
+            --background: #F5F8FF;
+            --surface: #FFFFFF;
+            --text-primary: #1A1A1A;
+            --text-secondary: #6B7280;
+            --border: #E5E7EB;
+            --shadow: rgba(11, 95, 255, 0.1);
+            --shadow-hover: rgba(11, 95, 255, 0.2);
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --error-color: #EF4444;
+            --radius-lg: 12px;
+            --radius-sm: 8px;
+            --font-family: 'Poppins', sans-serif;
             --transition: all 0.3s ease;
         }
 
@@ -56,10 +69,25 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: var(--font-family);
             line-height: 1.6;
-            color: var(--dark-color);
-            background-color: #f5f5f5;
+            color: var(--text-primary);
+            background: var(--background);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Subtle background pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(11, 95, 255, 0.03) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(14, 165, 164, 0.03) 0%, transparent 50%);
+            z-index: -1;
         }
 
         .dashboard-container {
@@ -69,11 +97,13 @@
 
         /* Sidebar Styles */
         .sidebar {
-            width: 250px;
-            background: var(--dark-color);
-            color: white;
-            padding: 20px 0;
+            width: 280px;
+            background: var(--surface);
+            color: var(--text-primary);
+            padding: 25px 0;
             transition: var(--transition);
+            border-right: 1px solid var(--border);
+            box-shadow: 0 4px 20px var(--shadow);
         }
 
         .sidebar-header {
@@ -82,7 +112,7 @@
         }
 
         .sidebar-header h2 {
-            color: white;
+            color: var(--primary);
             font-size: 1.3rem;
         }
 
@@ -91,19 +121,38 @@
         }
 
         .menu-item {
-            padding: 12px 20px;
+            padding: 15px 25px;
             display: flex;
             align-items: center;
-            color: rgba(255, 255, 255, 0.8);
+            color: var(--text-secondary);
             text-decoration: none;
             transition: var(--transition);
-            border-left: 3px solid transparent;
+            border-left: 4px solid transparent;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            margin: 5px 0;
+            position: relative;
+            overflow: hidden;
         }
 
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(11, 95, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .menu-item:hover::before { left: 100%; }
+
         .menu-item:hover, .menu-item.active {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border-left: 3px solid var(--accent-color);
+            background: rgba(11, 95, 255, 0.05);
+            color: var(--primary);
+            border-left: 4px solid var(--primary);
+            transform: translateX(10px);
+            box-shadow: 0 4px 12px var(--shadow);
         }
 
         .menu-item i {
@@ -115,19 +164,27 @@
         /* Main Content Styles */
         .main-content {
             flex: 1;
-            padding: 30px;
+            padding: 35px;
+            position: relative;
         }
 
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
+            background: var(--surface);
+            padding: 25px;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 4px 20px var(--shadow);
+            border: 1px solid var(--border);
+            animation: fadeInUp 0.6s ease-out;
         }
 
         .header h1 {
-            color: var(--dark-color);
-            font-size: 1.8rem;
+            color: var(--text-primary);
+            font-size: 2rem;
+            font-weight: 700;
         }
 
         .user-profile {
@@ -152,31 +209,33 @@
         }
 
         .status-pending {
-            background-color: #fff3cd;
-            color: #856404;
+            background-color: rgba(245, 158, 11, 0.1);
+            color: var(--warning-color);
         }
 
         .status-inprogress {
-            background-color: #cce5ff;
-            color: #004085;
+            background-color: rgba(11, 95, 255, 0.1);
+            color: var(--primary);
         }
 
         .status-resolved {
-            background-color: #d4edda;
-            color: #155724;
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
         }
 
         .status-rejected {
-            background-color: #f8d7da;
-            color: #721c24;
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--error-color);
         }
         .complaints-table {
             width: 100%;
-            background: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 4px 20px var(--shadow);
             overflow: hidden;
             margin-bottom: 30px;
+            border: 1px solid var(--border);
+            animation: fadeInUp 1s ease-out;
         }
 
         table {
@@ -191,19 +250,19 @@
         }
 
         th {
-            background-color: #f8f9fa;
+            background-color: rgba(11, 95, 255, 0.05);
             font-weight: 600;
-            color: var(--dark-color);
+            color: var(--text-primary);
         }
 
         tr:hover {
-            background-color: #f5f5f5;
+            background-color: rgba(11, 95, 255, 0.02);
         }
 
         .action-btn {
             padding: 6px 12px;
             border: none;
-            border-radius: 4px;
+            border-radius: var(--radius-sm);
             cursor: pointer;
             font-size: 13px;
             transition: var(--transition);
@@ -211,7 +270,7 @@
         }
 
         .view-btn {
-            background-color: var(--accent-color);
+            background-color: var(--secondary);
             color: white;
         }
 
@@ -229,24 +288,39 @@
         }
 
         .stat-card {
-            background: white;
-            border-radius: var(--border-radius);
-            padding: 20px;
-            box-shadow: var(--box-shadow);
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 25px;
+            box-shadow: 0 4px 20px var(--shadow);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border: 1px solid var(--border);
+            animation: fadeInUp 0.8s ease-out both;
+            transition: var(--transition);
         }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px var(--shadow-hover);
+        }
+
+        .stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.3s; }
+        .stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+        /* Remove duplicate hover effect */
 
         .stat-info h3 {
             font-size: 14px;
-            color: #6c757d;
+            color: var(--text-secondary);
             margin-bottom: 5px;
         }
 
         .stat-info h2 {
             font-size: 24px;
-            color: var(--dark-color);
+            color: var(--text-primary);
         }
 
         .stat-icon {
@@ -260,37 +334,39 @@
         }
 
         .stat-icon.total {
-            background-color: rgba(67, 97, 238, 0.1);
-            color: var(--primary-color);
+            background-color: rgba(11, 95, 255, 0.1);
+            color: var(--primary);
         }
 
         .stat-icon.pending {
-            background-color: rgba(255, 152, 0, 0.1);
+            background-color: rgba(245, 158, 11, 0.1);
             color: var(--warning-color);
         }
 
         .stat-icon.resolved {
-            background-color: rgba(75, 181, 67, 0.1);
+            background-color: rgba(16, 185, 129, 0.1);
             color: var(--success-color);
         }
 
         .stat-icon.rejected {
-            background-color: rgba(255, 51, 51, 0.1);
+            background-color: rgba(239, 68, 68, 0.1);
             color: var(--error-color);
         }
 
         /* Complaint Form */
         .complaint-form {
-            background: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            padding: 30px;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 4px 20px var(--shadow);
+            padding: 35px;
             margin-bottom: 30px;
+            border: 1px solid var(--border);
+            animation: fadeInScale 1s ease-out;
         }
 
         .form-title {
             margin-bottom: 20px;
-            color: var(--dark-color);
+            color: var(--text-primary);
             font-size: 1.5rem;
             display: flex;
             align-items: center;
@@ -298,7 +374,7 @@
 
         .form-title i {
             margin-right: 10px;
-            color: var(--primary-color);
+            color: var(--primary);
         }
 
         .form-group {
@@ -309,6 +385,7 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 500;
+            color: var(--text-primary);
         }
 
         .form-group input,
@@ -316,10 +393,11 @@
         .form-group textarea {
             width: 100%;
             padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            font-family: 'Poppins', sans-serif;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-family: var(--font-family);
             transition: var(--transition);
+            background: var(--surface);
         }
 
         .form-group textarea {
@@ -330,25 +408,41 @@
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
-            border-color: var(--accent-color);
+            border-color: var(--primary);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(72, 149, 239, 0.2);
+            box-shadow: 0 0 0 3px rgba(11, 95, 255, 0.1);
         }
 
         .submit-btn {
-            background-color: var(--primary-color);
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: var(--border-radius);
+            padding: 16px 32px;
+            border-radius: var(--radius-sm);
             cursor: pointer;
             font-size: 16px;
-            font-weight: 500;
+            font-weight: 600;
             transition: var(--transition);
+            position: relative;
+            overflow: hidden;
         }
 
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .submit-btn:hover::before { left: 100%; }
+
         .submit-btn:hover {
-            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow-hover);
         }
 
         /* Tabs */
@@ -362,14 +456,14 @@
             padding: 12px 20px;
             cursor: pointer;
             font-weight: 500;
-            color: #6c757d;
+            color: var(--text-secondary);
             border-bottom: 3px solid transparent;
             transition: var(--transition);
         }
 
         .tab.active {
-            color: var(--primary-color);
-            border-bottom: 3px solid var(--primary-color);
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
         }
 
         .tab-content {
@@ -393,15 +487,17 @@
         }
 
         .modal-content {
-            background-color: white;
+            background: var(--surface);
             margin: 10% auto;
-            padding: 30px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
+            padding: 35px;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 8px 25px var(--shadow-hover);
             width: 90%;
             max-width: 600px;
             max-height: 80vh;
             overflow-y: auto;
+            border: 1px solid var(--border);
+            animation: scaleIn 0.3s ease-out;
         }
 
         .modal-header {
@@ -413,18 +509,18 @@
 
         .modal-header h2 {
             margin: 0;
-            color: var(--dark-color);
+            color: var(--text-primary);
         }
 
         .close {
-            color: #aaa;
+            color: var(--text-secondary);
             font-size: 28px;
             font-weight: bold;
             cursor: pointer;
         }
 
         .close:hover {
-            color: var(--dark-color);
+            color: var(--text-primary);
         }
 
         /* Responsive Adjustments */
@@ -1250,6 +1346,51 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 });
+
+        // Dark Mode Toggle Functionality
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+        const icon = darkModeToggle.querySelector('i');
+
+        // Check for saved theme preference or default to light mode
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        if (currentTheme === 'dark') {
+            body.classList.add('dark-mode');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isDark = body.classList.contains('dark-mode');
+
+            // Update icon
+            if (isDark) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Profile Tab
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        });
 </script>
 
 

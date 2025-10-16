@@ -12,20 +12,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Admin Dashboard - Student Grievance System</title>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">
+        <i class="fas fa-moon"></i>
+    </button>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="modern-blue-styles.css" />
     <style>
         :root {
-            --primary-color: #4361ee;
-            --secondary-color: #3f37c9;
-            --accent-color: #4895ef;
-            --light-color: #f8f9fa;
-            --dark-color: #212529;
-            --success-color: #4bb543;
-            --warning-color: #ff9800;
-            --error-color: #ff3333;
-            --border-radius: 12px;
-            --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            --primary: #0B5FFF;
+            --secondary: #0EA5A4;
+            --accent: #FF6B6B;
+            --background: #F5F8FF;
+            --surface: #FFFFFF;
+            --text-primary: #1A1A1A;
+            --text-secondary: #6B7280;
+            --border: #E5E7EB;
+            --shadow: rgba(11, 95, 255, 0.1);
+            --shadow-hover: rgba(11, 95, 255, 0.2);
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --error-color: #EF4444;
+            --radius-lg: 12px;
+            --radius-sm: 8px;
+            --font-family: 'Poppins', sans-serif;
             --transition: all 0.3s ease;
         }
 
@@ -36,10 +48,12 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: var(--font-family);
             line-height: 1.6;
-            color: var(--dark-color);
-            background-color: #f5f5f5;
+            color: var(--text-primary);
+            background: var(--background);
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .dashboard-container {
@@ -49,20 +63,22 @@
 
         /* Sidebar Styles */
         .sidebar {
-            width: 250px;
-            background: var(--dark-color);
-            color: white;
-            padding: 20px 0;
+            width: 280px;
+            background: var(--surface);
+            color: var(--text-primary);
+            padding: 25px 0;
             transition: var(--transition);
+            border-right: 1px solid var(--border);
+            box-shadow: 0 4px 20px var(--shadow);
         }
 
         .sidebar-header {
             padding: 0 20px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--border);
         }
 
         .sidebar-header h2 {
-            color: white;
+            color: var(--text-primary);
             font-size: 1.3rem;
         }
 
@@ -71,19 +87,38 @@
         }
 
         .menu-item {
-            padding: 12px 20px;
+            padding: 15px 25px;
             display: flex;
             align-items: center;
-            color: rgba(255, 255, 255, 0.8);
+            color: var(--text-secondary);
             text-decoration: none;
             transition: var(--transition);
-            border-left: 3px solid transparent;
+            border-left: 4px solid transparent;
+            border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+            margin: 5px 0;
+            position: relative;
+            overflow: hidden;
         }
 
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(11,95,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .menu-item:hover::before { left: 100%; }
+
         .menu-item:hover, .menu-item.active {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border-left: 3px solid var(--accent-color);
+            background: rgba(11, 95, 255, 0.05);
+            color: var(--primary);
+            border-left: 4px solid var(--primary);
+            transform: translateX(10px);
+            box-shadow: 0 4px 12px var(--shadow);
         }
 
         .menu-item i {
@@ -94,25 +129,37 @@
 
         .logout-btn {
             margin-top: auto;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid var(--border);
             padding-top: 20px;
         }
 
         /* Main Content Styles */
         .main-content {
             flex: 1;
-            padding: 30px;
+            padding: 35px;
+            position: relative;
         }
 
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
+            background: var(--surface);
+            padding: 25px;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 4px 20px var(--shadow);
+            border: 1px solid var(--border);
+            animation: fadeInDown 1s ease-out;
         }
 
         .header h1 {
-            color: var(--dark-color);
+            color: var(--text-primary);
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .user-profile {
@@ -125,18 +172,21 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
+            border: 2px solid var(--border);
         }
 
         .user-profile span {
             font-weight: 500;
+            color: var(--text-primary);
         }
 
         .user-profile input {
             font-weight: 500;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
             padding: 2px 5px;
             width: 120px;
+            background: var(--surface);
         }
 
         /* Stats Container */
@@ -148,31 +198,38 @@
         }
 
         .stat-card {
-            background: white;
-            padding: 20px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
+            background: var(--surface);
+            padding: 25px;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 4px 20px var(--shadow);
             display: flex;
             justify-content: space-between;
             align-items: center;
             transition: var(--transition);
+            border: 1px solid var(--border);
+            animation: fadeInUp 0.8s ease-out both;
         }
 
+        .stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.3s; }
+        .stat-card:nth-child(4) { animation-delay: 0.4s; }
+
         .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px var(--shadow-hover);
         }
 
         .stat-info h3 {
             font-size: 14px;
-            color: #6c757d;
+            color: var(--text-secondary);
             margin-bottom: 5px;
         }
 
         .stat-info h2 {
             font-size: 28px;
             font-weight: 700;
-            color: var(--dark-color);
+            color: var(--text-primary);
         }
 
         .stat-icon {
@@ -186,35 +243,37 @@
         }
 
         .stat-icon.total {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
         }
 
         .stat-icon.pending {
-            background: linear-gradient(135deg, var(--warning-color), #ffb74d);
+            background: linear-gradient(135deg, var(--warning-color), #fbbf24);
             color: white;
         }
 
         .stat-icon.resolved {
-            background: linear-gradient(135deg, var(--success-color), #66bb6a);
+            background: linear-gradient(135deg, var(--success-color), #34d399);
             color: white;
         }
 
         .stat-icon.rejected {
-            background: linear-gradient(135deg, var(--error-color), #ef5350);
+            background: linear-gradient(135deg, var(--error-color), #f87171);
             color: white;
         }
 
         .filter-bar {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             display: flex;
             gap: 20px;
             align-items: center;
-            background: white;
-            padding: 15px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
+            background: var(--surface);
+            padding: 20px;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 4px 20px var(--shadow);
+            border: 1px solid var(--border);
             flex-wrap: wrap;
+            animation: fadeInLeft 1s ease-out;
         }
 
         .filter-group {
@@ -225,13 +284,22 @@
         .filter-group label {
             margin-right: 10px;
             font-weight: 500;
+            color: var(--text-primary);
         }
 
         select, input[type="text"], input[type="date"] {
             padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            font-family: 'Poppins', sans-serif;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-family: var(--font-family);
+            background: var(--surface);
+            transition: var(--transition);
+        }
+
+        select:focus, input[type="text"]:focus, input[type="date"]:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(11, 95, 255, 0.1);
         }
 
         .search-box {
@@ -248,7 +316,7 @@
             left: 12px;
             top: 50%;
             transform: translateY(-50%);
-            color: #6c757d;
+            color: var(--text-secondary);
         }
 
         /* Status Badges */
@@ -262,32 +330,34 @@
         }
 
         .status-pending {
-            background-color: #fff3cd;
-            color: #856404;
+            background-color: rgba(245, 158, 11, 0.1);
+            color: var(--warning-color);
         }
 
         .status-inprogress {
-            background-color: #cce5ff;
-            color: #004085;
+            background-color: rgba(11, 95, 255, 0.1);
+            color: var(--primary);
         }
 
         .status-resolved {
-            background-color: #d4edda;
-            color: #155724;
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
         }
 
         .status-rejected {
-            background-color: #f8d7da;
-            color: #721c24;
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--error-color);
         }
 
         /* Complaints Table */
         .complaints-table {
             width: 100%;
-            background: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 4px 20px var(--shadow);
+            border: 1px solid var(--border);
             overflow: hidden;
+            animation: fadeInScale 1.2s ease-out;
         }
 
         table {
@@ -298,35 +368,54 @@
         th, td {
             padding: 15px;
             text-align: left;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--border);
         }
 
         th {
-            background-color: #f8f9fa;
+            background-color: rgba(11, 95, 255, 0.05);
             font-weight: 600;
-            color: var(--dark-color);
+            color: var(--text-primary);
         }
 
         tr:hover {
-            background-color: #f5f5f5;
+            background-color: rgba(11, 95, 255, 0.02);
         }
 
         .action-btn {
-            padding: 6px 12px;
+            padding: 8px 16px;
             border: none;
-            border-radius: 6px;
+            border-radius: var(--radius-sm);
             cursor: pointer;
             font-size: 14px;
-            margin-right: 5px;
-            transition: background-color 0.3s ease;
+            font-weight: 600;
+            margin-right: 8px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .action-btn:hover::before { left: 100%; }
+
         .action-btn:hover {
-            opacity: 0.8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow-hover);
         }
 
         .view-btn {
-            background-color: var(--accent-color);
+            background-color: var(--secondary);
             color: white;
         }
 
@@ -524,15 +613,15 @@
     </div>
 
     <!-- View Complaint Modal -->
-    <div id="viewModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
-        <div style="background: white; padding: 30px; border-radius: 12px; max-width: 800px; width: 90%; max-height: 90vh; overflow-y: auto;">
-            <h2 style="margin-bottom: 20px;">Complaint Details</h2>
+    <div id="viewModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; animation: fadeIn 0.3s ease-out;">
+        <div style="background: var(--surface); padding: 35px; border-radius: var(--radius-lg); max-width: 800px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 8px 25px var(--shadow-hover); border: 1px solid var(--border); animation: scaleIn 0.3s ease-out;">
+            <h2 style="margin-bottom: 25px; color: var(--primary); font-size: 1.8rem; font-weight: 700;">Complaint Details</h2>
             <div id="complaintDetails"></div>
-            <div id="fileViewer" style="margin-top: 20px; display: none;">
-                <h3>Attachment Preview</h3>
+            <div id="fileViewer" style="margin-top: 25px; display: none;">
+                <h3 style="color: var(--text-primary); margin-bottom: 15px;">Attachment Preview</h3>
                 <div id="fileContent"></div>
             </div>
-            <button onclick="document.getElementById('viewModal').style.display='none';" style="margin-top: 20px; padding: 10px 20px; background: var(--primary-color); color: white; border: none; border-radius: 6px; cursor: pointer;">Close</button>
+            <button onclick="document.getElementById('viewModal').style.display='none';" style="margin-top: 25px; padding: 12px 24px; background: var(--primary); color: white; border: none; border-radius: var(--radius-sm); cursor: pointer; font-weight: 600; transition: var(--transition); text-transform: uppercase; letter-spacing: 0.5px;">Close</button>
         </div>
     </div>
 
@@ -942,6 +1031,35 @@
             } catch (error) {
                 console.error('Error uploading photo:', error);
                 alert('Error uploading profile photo.');
+            }
+        });
+
+        // Dark Mode Toggle Functionality
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+        const icon = darkModeToggle.querySelector('i');
+
+        // Check for saved theme preference or default to light mode
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        if (currentTheme === 'dark') {
+            body.classList.add('dark-mode');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isDark = body.classList.contains('dark-mode');
+
+            // Update icon
+            if (isDark) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
             }
         });
     </script>

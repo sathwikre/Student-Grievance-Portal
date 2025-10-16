@@ -4,81 +4,298 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verify Code - Student Grievance Portal</title>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">
+        <i class="fas fa-moon"></i>
+    </button>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="modern-blue-styles.css" />
     <style>
+        :root {
+            --primary: #0B5FFF;
+            --secondary: #0EA5A4;
+            --accent: #FF6B6B;
+            --background: #F5F8FF;
+            --surface: #FFFFFF;
+            --text-primary: #1A1A1A;
+            --text-secondary: #6B7280;
+            --border: #E5E7EB;
+            --shadow: rgba(11, 95, 255, 0.1);
+            --shadow-hover: rgba(11, 95, 255, 0.2);
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --error-color: #EF4444;
+            --radius-lg: 12px;
+            --radius-sm: 8px;
+            --font-family: 'Poppins', sans-serif;
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: var(--font-family);
+            background: var(--background);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Subtle background pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(11, 95, 255, 0.03) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(14, 165, 164, 0.03) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        .header-container { display: flex; justify-content: center; align-items: center; }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .logo:hover { transform: scale(1.05); }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-right: 15px;
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .logo-text h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
+
+        main {
+            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            padding: 60px 0;
         }
-        .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
+
+        .auth-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 45px;
+            box-shadow: 0 4px 20px var(--shadow);
+            width: 100%;
+            max-width: 400px;
+            transition: var(--transition);
+            border: 1px solid var(--border);
         }
-        h2 {
+
+        .auth-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px var(--shadow-hover);
+        }
+
+        .auth-card h2 {
+            color: var(--primary);
+            margin-bottom: 30px;
+            font-size: 1.6rem;
             text-align: center;
-            margin-bottom: 20px;
-        }
-        form {
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
-        label {
-            margin-bottom: 5px;
+
+        .auth-card h2 i {
+            color: var(--secondary);
         }
-        input {
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+
+        .form-group { margin-bottom: 25px; }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.95rem;
         }
-        button {
-            padding: 10px;
-            background-color: #007bff;
+
+        .form-group input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-family: var(--font-family);
+            font-size: 1rem;
+            transition: var(--transition);
+            background: var(--surface);
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(11, 95, 255, 0.1);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 16px 32px;
+            background: var(--primary);
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 1rem;
             cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            text-align: center;
+            margin-top: 15px;
+            position: relative;
+            overflow: hidden;
         }
-        button:hover {
-            background-color: #0056b3;
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
         }
+
+        .btn:hover::before { left: 100%; }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow-hover);
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .form-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .form-footer a:hover {
+            color: var(--secondary);
+        }
+
         .message {
             margin-top: 15px;
             text-align: center;
-            color: red;
+            color: var(--error-color);
         }
+
         .success {
-            color: green;
+            color: var(--success-color);
         }
-        a {
+
+        footer {
+            background: var(--surface);
+            color: var(--text-secondary);
+            padding: 25px 0;
             text-align: center;
-            display: block;
-            margin-top: 10px;
-            color: #007bff;
-            text-decoration: none;
+            font-size: 0.95rem;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .auth-card { padding: 35px 25px; }
+            .header-container { flex-direction: column; gap: 15px; }
+            .logo-text h1 { font-size: 1.5rem; }
+        }
+
+        @media (max-width: 576px) {
+            main { padding: 40px 0; }
+            .auth-card { padding: 30px 20px; }
+            .form-group input { padding: 14px 16px; }
+            .btn { padding: 14px 28px; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Verify Reset Code</h2>
-        <form id="verifyForm">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" readonly>
-            <label for="code">Enter the 6-digit code:</label>
-            <input type="text" id="code" name="code" maxlength="6" required>
-            <button type="submit">Verify Code</button>
-        </form>
-        <div id="message" class="message"></div>
-        <a href="forgot-password.html">Back</a>
-    </div>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">SGS</div>
+                <div class="logo-text"><h1>Student Grievance System</h1></div>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="auth-card">
+            <h2><i class="fas fa-shield-alt"></i> Verify Reset Code</h2>
+            <form id="verifyForm">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="code">Enter the 6-digit code:</label>
+                    <input type="text" id="code" name="code" maxlength="6" placeholder="123456" required>
+                </div>
+                <button type="submit" class="btn">Verify Code</button>
+            </form>
+            <div id="message" class="message"></div>
+            <div class="form-footer">
+                <a href="forgot-password.html">Back</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Student Grievance System. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script>
         // Get email from URL params
@@ -114,6 +331,35 @@
             } catch (error) {
                 messageDiv.textContent = 'An error occurred. Please try again.';
                 messageDiv.className = 'message';
+            }
+        });
+
+        // Dark Mode Toggle Functionality
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+        const icon = darkModeToggle.querySelector('i');
+
+        // Check for saved theme preference or default to light mode
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        if (currentTheme === 'dark') {
+            body.classList.add('dark-mode');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isDark = body.classList.contains('dark-mode');
+
+            // Update icon
+            if (isDark) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
             }
         });
     </script>
