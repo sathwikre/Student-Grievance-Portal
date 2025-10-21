@@ -5,106 +5,180 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Admin Login - Student Grievance System</title>
 
-    <!-- Dark Mode Toggle -->
-    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">
-        <i class="fas fa-moon"></i>
-    </button>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <link rel="stylesheet" href="modern-blue-styles.css" />
-    <style>
-        :root {
-            --primary: #0B5FFF;
-            --secondary: #0EA5A4;
-            --accent: #FF6B6B;
-            --background: #F5F8FF;
-            --surface: #FFFFFF;
-            --text-primary: #1A1A1A;
-            --text-secondary: #6B7280;
-            --border: #E5E7EB;
-            --shadow: rgba(11, 95, 255, 0.1);
-            --shadow-hover: rgba(11, 95, 255, 0.2);
-            --success-color: #10B981;
-            --warning-color: #F59E0B;
-            --error-color: #EF4444;
-            --radius-lg: 12px;
-            --radius-sm: 8px;
-            --font-family: 'Poppins', sans-serif;
-            --transition: all 0.3s ease;
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                            950: '#082f49',
+                        },
+                    },
+                    animation: {
+                        'spin-slow': 'spin 2s linear infinite',
+                    },
+                },
+            },
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: var(--font-family); background-color: var(--background); color: var(--text-primary); min-height: 100vh; display: flex; flex-direction: column; }
-        header { background: var(--surface); padding: 20px 0; box-shadow: 0 2px 15px var(--shadow); }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .header-container { display: flex; justify-content: center; align-items: center; }
-        .logo { display: flex; align-items: center; text-decoration: none; }
-        .logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; font-weight: bold; margin-right: 12px; }
-        .logo-text h1 { font-size: 1.5rem; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        main { flex: 1; display: flex; justify-content: center; align-items: center; padding: 60px 0; }
-        .auth-card { background: var(--surface); border-radius: var(--radius-lg); padding: 40px; box-shadow: 0 4px 20px var(--shadow); width: 100%; max-width: 400px; border: 1px solid var(--border); }
-        .auth-card h2 { color: var(--primary); margin-bottom: 25px; font-size: 1.5rem; text-align: center; }
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--text-primary); }
-        .form-group input, .form-group select { width: 100%; padding: 14px 20px; border: 2px solid var(--border); border-radius: var(--radius-sm); font-family: var(--font-family); transition: var(--transition); background: var(--surface); }
-        .form-group input:focus, .form-group select:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(11, 95, 255, 0.1); }
-        .btn { display: inline-block; padding: 14px 28px; background: var(--primary); color: white; border: none; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: var(--transition); width: 100%; text-align: center; margin-top: 10px; }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px var(--shadow-hover); }
-        .form-footer { text-align: center; margin-top: 20px; font-size: 0.9rem; color: var(--text-secondary); }
-        .form-footer a { color: var(--primary); text-decoration: none; cursor: pointer; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: flex-start; padding: 40px 20px; overflow-y: auto; }
-        .modal.active { display: flex; }
-        .modal-content { background: var(--surface); border-radius: var(--radius-lg); padding: 40px; width: 100%; max-width: 500px; box-shadow: 0 8px 25px var(--shadow-hover); position: relative; animation: scaleIn 0.3s ease-out; margin: auto; border: 1px solid var(--border); }
-        @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-        .close-modal { position: absolute; top: 20px; right: 20px; font-size: 1.5rem; color: var(--text-secondary); cursor: pointer; transition: var(--transition); }
-        .close-modal:hover { color: var(--text-primary); }
-        footer { background: var(--text-primary); color: white; padding: 20px 0; text-align: center; font-size: 0.9rem; margin-top: auto; }
-        @media (max-width: 768px) { .modal { padding: 20px 10px; align-items: flex-start; } .modal-content { padding: 30px 20px; } }
+    </script>
+    <style>
+        @keyframes scaleIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .loading {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 0.6s linear infinite;
+            display: inline-block;
+            margin-left: 0.5rem;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container header-container">
-            <a href="index.html" class="logo">
-                <div class="logo-icon">SGS</div>
-                <div class="logo-text"><h1>Student Grievance System</h1></div>
+    <!-- Dark mode toggle -->
+    <button 
+        type="button" 
+        id="darkModeToggle" 
+        class="fixed top-4 right-4 p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-600 z-50"
+        aria-label="Toggle dark mode"
+    >
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <header class="fixed top-0 left-0 right-0 bg-white dark:bg-gray-800 shadow-md z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <a href="studentlogin.html" class="flex items-center justify-center gap-3 group">
+                <div class="w-10 h-10 flex items-center justify-center bg-gradient-to-r from-primary-500 to-blue-500 rounded-xl text-white font-bold shadow-lg group-hover:shadow-primary-500/50 transition duration-300">
+                    SGS
+                </div>
+                <div class="text-center">
+                    <h1 class="text-xl font-bold bg-gradient-to-r from-primary-500 to-blue-500 bg-clip-text text-transparent">
+                        Student Grievance System
+                    </h1>
+                </div>
             </a>
         </div>
     </header>
-    <main>
-   
-        <div class="auth-card">
-            <h2><i class="fas fa-user-shield"></i> Admin Login</h2>
-            <form id="adminForm">
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="adminEmail" placeholder="admin@college.edu" required />
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="adminPassword" placeholder="••••••••" required />
-                </div>
-                <div class="form-group">
-                    <label>Department</label>
-                    <select id="adminDept" required>
-                        <option value="">Select department</option>
-                        <option value="academic">Academic</option>
-                        <option value="hostel">Hostel</option>
-                        <option value="administration">Administration</option>
-                        <option value="facilities">Facilities</option>
-                        <option value="library">Library</option>
-                        <option value="transport">Transport</option>
-                        <option value="harassment">Harassment</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn">Login</button>
-            </form>
-            <div class="form-footer">New admin? <a id="showAdminSignup">Register here</a> | <a href="forgot-password.html">Forgot Password?</a></div>
+    <main class="min-h-screen py-16 px-4 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-md mx-auto">
+            <div class="text-center mb-8">
+                <a href="studentlogin.html" class="inline-flex items-center gap-3 group" aria-label="Return to student login">
+                    <div class="w-12 h-12 flex items-center justify-center bg-gradient-to-r from-primary-500 to-blue-500 rounded-xl text-white font-bold shadow-lg group-hover:shadow-primary-500/50 transition duration-300">
+                        SG
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold text-gray-900 dark:text-white">Student Grievance System</h1>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Admin Portal</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-8 border border-gray-100 dark:border-gray-700">
+                <h2 class="text-2xl font-semibold text-center mb-6 text-primary-500 dark:text-primary-400 flex items-center justify-center gap-2">
+                    <i class="fas fa-user-shield"></i> Admin Login
+                </h2>
+
+                <form id="adminForm" class="space-y-4" novalidate>
+                    <div class="space-y-1">
+                        <label for="adminEmail" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Email address</label>
+                        <input 
+                            type="email" 
+                            id="adminEmail" 
+                            name="email"
+                            autocomplete="email"
+                            placeholder="admin@college.edu" 
+                            required 
+                            class="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-600 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 dark:bg-gray-700 dark:text-white dark:focus:border-primary-400 dark:placeholder-gray-400 transition duration-150"
+                            aria-describedby="email-error">
+                    </div>
+
+                    <div class="space-y-1">
+                        <label for="adminPassword" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Password</label>
+                        <input 
+                            type="password" 
+                            id="adminPassword" 
+                            name="password"
+                            autocomplete="current-password"
+                            placeholder="••••••••" 
+                            required 
+                            class="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-600 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 dark:bg-gray-700 dark:text-white dark:focus:border-primary-400 dark:placeholder-gray-400 transition duration-150"
+                            aria-describedby="password-error">
+                    </div>
+
+                    <div class="space-y-1">
+                        <label for="adminDept" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Department</label>
+                        <select 
+                            id="adminDept" 
+                            name="department"
+                            required 
+                            class="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-600 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 dark:bg-gray-700 dark:text-white dark:focus:border-primary-400 dark:placeholder-gray-400 transition duration-150">
+                            <option value="">Select department</option>
+                            <option value="academic">Academic</option>
+                            <option value="hostel">Hostel</option>
+                            <option value="administration">Administration</option>
+                            <option value="facilities">Facilities</option>
+                            <option value="library">Library</option>
+                            <option value="transport">Transport</option>
+                            <option value="harassment">Harassment</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <button 
+                        type="submit" 
+                        class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition duration-150">
+                        <span>Sign in</span>
+                        <span class="loading hidden" aria-hidden="true"></span>
+                    </button>
+
+                    <div class="text-center text-sm text-gray-600 dark:text-gray-400">
+                        New admin? 
+                        <button 
+                            type="button" 
+                            id="showAdminSignup" 
+                            class="font-semibold text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300 focus:outline-none focus:underline">
+                            Register here
+                        </button>
+                        <span class="px-2">|</span>
+                        <a 
+                            href="forgot-password.html" 
+                            class="font-semibold text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300 focus:outline-none focus:underline">
+                            Forgot Password?
+                        </a>
+                    </div>
+                </form>
+            </div>
         </div>
     </main>
-    <footer>
-        <div class="container">
-            <p>&copy; 2023 Student Grievance System. All rights reserved.</p>
+    <footer class="bg-gray-900 text-white py-6 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-sm text-gray-400">
+                &copy; 2023 Student Grievance System. All rights reserved.
+            </p>
         </div>
     </footer>
     <script>
@@ -145,39 +219,90 @@
             // Create modal for admin signup if not exists
             if (!document.getElementById('adminSignupModal')) {
                 const modalHtml = `
-                <div class="modal active" id="adminSignupModal">
-                    <div class="modal-content animate__animated animate__fadeInUp">
-                        <span class="close-modal" id="closeAdminSignup">&times;</span>
-                        <h2><i class="fas fa-user-plus"></i> Admin Sign Up</h2>
-                        <form id="adminSignupForm">
-                            <div class="form-group">
-                                <label>Username</label>
-                                <input type="text" id="adminSignupUsername" placeholder="Admin Name" required />
+                <div class="modal fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 active" id="adminSignupModal">
+                    <div class="bg-white dark:bg-gray-800 w-full max-w-md rounded-2xl shadow-xl relative overflow-hidden">
+                        <div class="p-6 sm:p-8">
+                            <button type="button" id="closeAdminSignup" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                                <span class="sr-only">Close modal</span>
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+
+                            <div class="text-center mb-8">
+                                <h2 class="text-2xl font-bold text-gray-900 dark:text-white flex items-center justify-center gap-2">
+                                    <i class="fas fa-user-plus text-primary-500"></i>
+                                    Admin Sign Up
+                                </h2>
+                                <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Create your admin account</p>
                             </div>
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input type="email" id="adminSignupEmail" placeholder="admin@college.edu" required />
-                            </div>
-                            <div class="form-group">
-                                <label>Department</label>
-                                <select id="adminSignupDept" required>
-                                    <option value="">Select department</option>
-                                    <option value="academic">Academic</option>
-                                    <option value="hostel">Hostel</option>
-                                    <option value="administration">Administration</option>
-                                    <option value="facilities">Facilities</option>
-                                    <option value="library">Library</option>
-                                    <option value="transport">Transport</option>
-                                    <option value="harassment">Harassment</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" id="adminSignupPassword" placeholder="••••••••" required />
-                            </div>
-                            <button type="submit" class="btn">Register</button>
-                        </form>
+
+                            <form id="adminSignupForm" class="space-y-4">
+                                <div>
+                                    <label for="adminSignupUsername" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Username</label>
+                                    <input 
+                                        type="text" 
+                                        id="adminSignupUsername" 
+                                        name="username"
+                                        required 
+                                        placeholder="Admin Name"
+                                        class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 dark:bg-gray-700 dark:text-white dark:focus:border-primary-400 dark:placeholder-gray-400"
+                                    >
+                                </div>
+
+                                <div>
+                                    <label for="adminSignupEmail" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                                    <input 
+                                        type="email" 
+                                        id="adminSignupEmail" 
+                                        name="email"
+                                        required 
+                                        placeholder="admin@college.edu"
+                                        class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 dark:bg-gray-700 dark:text-white dark:focus:border-primary-400 dark:placeholder-gray-400"
+                                    >
+                                </div>
+
+                                <div>
+                                    <label for="adminSignupDept" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Department</label>
+                                    <select 
+                                        id="adminSignupDept" 
+                                        name="department"
+                                        required
+                                        class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 dark:bg-gray-700 dark:text-white dark:focus:border-primary-400"
+                                    >
+                                        <option value="">Select department</option>
+                                        <option value="academic">Academic</option>
+                                        <option value="hostel">Hostel</option>
+                                        <option value="administration">Administration</option>
+                                        <option value="facilities">Facilities</option>
+                                        <option value="library">Library</option>
+                                        <option value="transport">Transport</option>
+                                        <option value="harassment">Harassment</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label for="adminSignupPassword" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password</label>
+                                    <input 
+                                        type="password" 
+                                        id="adminSignupPassword" 
+                                        name="password"
+                                        required 
+                                        placeholder="••••••••"
+                                        class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 dark:bg-gray-700 dark:text-white dark:focus:border-primary-400 dark:placeholder-gray-400"
+                                    >
+                                </div>
+
+                                <button 
+                                    type="submit"
+                                    class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-primary-500 hover:bg-primary-600 text-white font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition-colors"
+                                >
+                                    <span>Register</span>
+                                    <span class="loading hidden"></span>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>`;
                 document.body.insertAdjacentHTML('beforeend', modalHtml);

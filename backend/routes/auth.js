@@ -62,52 +62,43 @@ export default function(authUpload) {
     // Removed hardcoded admin check to avoid ReferenceError
     // Admin login is handled separately in /admin-login route
 
-    // Then check students
+          // Check for student or admin based on role
     try {
-      const student = await User.findOne({ email: trimmedEmail });
-      if (!student) {
-        console.log("Student not found for email:", trimmedEmail);
-        return res.status(401).json({ message: "Student not found" });
+      const { role } = req.body;
+      
+      // Find user by email and role
+      const user = await User.findOne({ 
+        email: trimmedEmail,
+        role: role || 'student' // Default to student if role not provided
+      });
+      
+      if (!user) {
+        console.log(`User (${role || 'student'}) not found for email:`, trimmedEmail);
+        return res.status(401).json({ message: "Account not found" });
       }
 
-      // 🔧 FIXED: trim the password before comparing
-      console.log("Entered password:", password);
-      console.log("Stored password:", student.password);
-
-      let isMatch;
-      if (student.password.startsWith('$2')) {
-        // Hashed password
-        isMatch = await bcrypt.compare(password.trim(), student.password);
-      } else {
-        // Plain text password (legacy), compare directly
-        isMatch = password.trim() === student.password.trim();
-        if (isMatch) {
-          // Re-hash the password for security
-          const salt = await bcrypt.genSalt(10);
-          student.password = await bcrypt.hash(password.trim(), salt);
-          await student.save();
-          console.log("Password re-hashed for user:", student.email);
-        }
-      }
-      console.log("Compare result:", isMatch);
-
+      // Compare password using the schema method
+      const isMatch = await user.matchPassword(password.trim());
+      
       if (!isMatch) {
-        console.log("Incorrect student password for:", trimmedEmail);
-        return res.status(401).json({ message: "Incorrect student password" });
+        console.log(`Incorrect password for ${role || 'student'}:`, trimmedEmail);
+        return res.status(401).json({ message: "Incorrect password" });
       }
 
-      console.log("Student login successful for:", trimmedEmail);
+      console.log(`${role || 'Student'} login successful for:`, trimmedEmail);
       res.status(200).json({
-        message: "Student login successful",
+        message: `${user.role.charAt(0).toUpperCase() + user.role.slice(1)} login successful`,
         user: {
-          id: student._id,
-          email: student.email,
-          username: student.username,
-          studentId: student.studentId,
-          department: student.department,
-          isAdmin: false,
-          photo: student.photo || null,
+          id: user._id,
+          email: user.email,
+          username: user.username,
+          studentId: user.studentId,
+          department: user.department,
+          role: user.role,
+          isAdmin: user.role === 'admin',
+          photo: user.photo || null,
         },
+        token: crypto.randomBytes(32).toString('hex'), // Add a session token
       });
     } catch (err) {
       console.error("Login error:", err);

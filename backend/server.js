@@ -58,9 +58,12 @@ app.get("/view.html", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/view.html"));
 });
 
-// Serve index.html for /index.html path
+// Serve studentlogin.html for /studentlogin.html path
+app.get("/studentlogin.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/studentlogin.html"));
+});
 
-// Default route
+// Default route - serve index.html
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });

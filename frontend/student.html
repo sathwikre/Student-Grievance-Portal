@@ -992,7 +992,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const student = JSON.parse(localStorage.getItem('student'));
     if (!student) {
         alert('Not logged in!');
-        window.location.href = '/index.html';
+        window.location.href = '/studentlogin.html';
         return;
     }
 
@@ -1008,12 +1008,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 localStorage.removeItem('student');
                 localStorage.removeItem('studentPhoto');
                 alert('Logged out successfully!');
-                window.location.href = '/index.html';
+                window.location.href = '/studentlogin.html';
             } else {
                 alert('Logout failed, but redirecting anyway.');
                 localStorage.removeItem('student');
                 localStorage.removeItem('studentPhoto');
-                window.location.href = '/index.html';
+                window.location.href = '/studentlogin.html';
             }
         } catch (err) {
             console.error('Logout error:', err);

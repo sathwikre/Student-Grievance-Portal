@@ -1,729 +1,1206 @@
-
-<!DOCTYPE html>
+k<!DOCTYPE html>
 <html lang="en">
 <head>
-   
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Grievance System | Login</title>
+    <title>Student Grievance Portal</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="modern-blue-styles.css">
-    <link rel="stylesheet" href="modern-blue-styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #0B5FFF;
-            --secondary: #0EA5A4;
-            --accent: #FF6B6B;
-            --background: #F5F8FF;
-            --surface: #FFFFFF;
-            --text-primary: #1A1A1A;
-            --text-secondary: #6B7280;
-            --border: #E5E7EB;
-            --shadow: rgba(11, 95, 255, 0.1);
-            --shadow-hover: rgba(11, 95, 255, 0.2);
-            --success-color: #10B981;
-            --warning-color: #F59E0B;
-            --error-color: #EF4444;
-            --radius-lg: 12px;
-            --radius-sm: 8px;
-            --font-family: 'Poppins', sans-serif;
+            --primary: #2c6fbb;
+            --primary-light: #4a8fd4;
+            --primary-dark: #1a4d8c;
+            --secondary: #4CAF50;
+            --accent: #FF5722;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
-            font-family: var(--font-family);
-            background: var(--background);
-            color: var(--text-primary);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--white);
             overflow-x: hidden;
         }
 
-        /* Subtle background pattern */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 20% 80%, rgba(11, 95, 255, 0.03) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(14, 165, 164, 0.03) 0%, transparent 50%);
-            z-index: -1;
-        }
-
-        header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 20px 0;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-            position: relative;
-            z-index: 10;
-        }
-
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-
-        .header-container { display: flex; justify-content: space-between; align-items: center; }
-
-        .logo {
-            display: flex;
-            align-items: center;
+        a {
             text-decoration: none;
-            transition: var(--transition);
+            color: inherit;
         }
 
-        .logo:hover { transform: scale(1.05); }
-
-        .logo-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--gradient);
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.4rem;
-            font-weight: bold;
-            margin-right: 15px;
-            box-shadow: 0 4px 12px var(--shadow);
+        ul {
+            list-style: none;
         }
 
-        .logo-text h1 {
-            font-size: 1.8rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin: 0;
-        }
-
-        .main-content {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            padding: 60px 0;
-            position: relative;
-        }
-
-        .hero-container {
-            display: flex;
-            align-items: center;
-            gap: 50px;
+        .container {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
-        .hero-content {
-            flex: 1;
-            animation: slideInLeft 1s ease-out;
-        }
-
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .hero-content h1 {
-            font-size: 3.2rem;
-            margin-bottom: 25px;
-            line-height: 1.1;
-            color: var(--text-primary);
-        }
-
-        .hero-content p {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            margin-bottom: 35px;
-            line-height: 1.6;
-        }
-
-        .auth-cards {
-            flex: 1;
-            display: flex;
-            gap: 30px;
-            animation: slideInRight 1s ease-out 0.3s both;
-        }
-
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .auth-card {
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            padding: 45px;
-            box-shadow: 0 4px 20px var(--shadow);
-            width: 100%;
-            transition: var(--transition);
-            display: none;
-            border: 1px solid var(--border);
-        }
-
-        .auth-card.active { display: block; }
-
-        .auth-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 25px var(--shadow-hover);
-        }
-
-        .auth-card h2 {
-            color: var(--primary);
-            margin-bottom: 30px;
-            font-size: 1.6rem;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .auth-card h2 i {
-            color: var(--secondary);
-        }
-
-        .form-group { margin-bottom: 25px; }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 600;
-            color: var(--text-primary);
-            font-size: 0.95rem;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 16px 20px;
-            border: 2px solid var(--border);
-            border-radius: var(--radius-sm);
-            font-family: var(--font-family);
-            font-size: 1rem;
-            transition: var(--transition);
-            background: var(--surface);
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(11, 95, 255, 0.1);
-        }
-
         .btn {
             display: inline-block;
-            padding: 16px 32px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: var(--radius-sm);
+            padding: 12px 28px;
+            border-radius: 50px;
             font-weight: 600;
-            font-size: 1rem;
+            text-align: center;
             cursor: pointer;
             transition: var(--transition);
-            width: 100%;
-            text-align: center;
-            margin-top: 15px;
-            position: relative;
-            overflow: hidden;
+            border: none;
+            font-size: 1rem;
         }
 
-        .btn::before {
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: var(--white);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-secondary {
+            background-color: var(--white);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+            color: var(--white);
+        }
+
+        .btn-accent:hover {
+            background-color: #e64a19;
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            border-radius: 2px;
         }
 
-        .btn:hover::before { left: 100%; }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px var(--shadow-hover);
+        .section-title p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
-        .form-footer {
-            text-align: center;
-            margin-top: 25px;
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-        }
-
-        .form-footer a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition);
-        }
-
-        .form-footer a:hover {
-            color: var(--secondary);
-        }
-
-        .modal {
-            display: none;
+        /* Header */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.7);
-            backdrop-filter: blur(5px);
             z-index: 1000;
-            justify-content: center;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            animation: fadeIn 0.3s ease-out;
+            padding: 20px 0;
         }
 
-        .modal.active { display: flex; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .logo {
+            display: flex;
+            align-items: center;
         }
 
-        .modal-content {
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            padding: 45px;
-            width: 100%;
-            max-width: 520px;
-            box-shadow: 0 8px 25px var(--shadow-hover);
-            position: relative;
-            animation: scaleIn 0.3s ease-out;
-            border: 1px solid var(--border);
+        .logo i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-right: 10px;
         }
 
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 1.8rem;
-            color: var(--text-secondary);
-            cursor: pointer;
+        .logo h1 {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-weight: 500;
             transition: var(--transition);
-            width: 30px;
-            height: 30px;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            position: relative;
+        }
+
+        .login-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--white);
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 10px 0;
+            z-index: 1001;
+            transform: translateY(10px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .login-dropdown:hover .dropdown-content {
+            display: block;
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .dropdown-content a {
+            color: var(--dark);
+            padding: 12px 20px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background-color: var(--light);
+            color: var(--primary);
+        }
+
+        .dropdown-content a i {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .login-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: var(--white);
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(44, 111, 187, 0.2);
+        }
+        }
+        
+        /* Admin Login Section Styles */
+        .admin-login-section {
+            background: var(--light);
+            padding: 60px 0;
+        }
+        
+        .auth-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .auth-card h2 {
+            color: var(--primary);
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 14px 20px;
+            border: 2px solid var(--light-gray);
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(44, 111, 187, 0.1);
+        }
+        
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(44, 111, 187, 0.8), rgba(44, 111, 187, 0.9)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            padding: 180px 0 100px;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        /* About Section */
+        .about {
+            background-color: var(--light);
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h3 {
+            font-size: 2rem;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            color: var(--gray);
+        }
+
+        .about-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .about-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
-            background: rgba(107, 114, 128, 0.1);
+            margin: 0 auto 20px;
         }
 
-        .close-modal:hover {
-            color: var(--text-primary);
-            background: rgba(107, 114, 128, 0.2);
+        .feature-icon i {
+            font-size: 1.8rem;
+            color: var(--white);
         }
 
-        footer {
-            background: var(--surface);
-            color: var(--text-secondary);
-            padding: 25px 0;
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+        }
+
+        .feature-card p {
+            color: var(--gray);
+        }
+
+        /* How It Works */
+        .how-it-works {
+            background-color: var(--light);
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 50px;
+        }
+
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-light);
+            z-index: 1;
+        }
+
+        .step {
             text-align: center;
-            font-size: 0.95rem;
-            border-top: 1px solid var(--border);
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: 700;
+            box-shadow: var(--shadow);
+        }
+
+        .step h3 {
+            margin-bottom: 10px;
+            color: var(--primary-dark);
+        }
+
+        .step p {
+            color: var(--gray);
+            max-width: 250px;
+            margin: 0 auto;
+        }
+
+        /* Testimonials */
+        .testimonials-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .testimonial {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin: 20px;
+            text-align: center;
+        }
+
+        .testimonial-content {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: var(--gray);
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .author-info h4 {
+            color: var(--primary-dark);
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--light-gray);
+            padding: 70px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-column h3 {
+            color: var(--white);
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-light);
+            padding-left: 5px;
+        }
+
+        .contact-info li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .contact-info i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         /* Responsive Design */
         @media (max-width: 992px) {
-            .hero-container { flex-direction: column; gap: 40px; }
-            .auth-cards { width: 100%; max-width: 500px; }
-            .hero-content h1 { font-size: 2.8rem; }
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .steps {
+                flex-direction: column;
+                gap: 40px;
+            }
+            
+            .steps::before {
+                display: none;
+            }
         }
 
         @media (max-width: 768px) {
-            .hero-container { gap: 30px; padding: 0 15px; }
-            .auth-cards { flex-direction: column; gap: 20px; }
-            .hero-content h1 { font-size: 2.4rem; }
-            .hero-content p { font-size: 1.1rem; }
-            .auth-card { padding: 35px 25px; }
-            .modal-content { padding: 35px 25px; margin: 20px; }
-            .header-container { flex-direction: column; gap: 15px; }
-            .logo-text h1 { font-size: 1.5rem; }
+            .nav-links, .nav-buttons {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-buttons, .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
         }
 
         @media (max-width: 576px) {
-            .main-content { padding: 40px 0; }
-            .hero-content h1 { font-size: 2rem; }
-            .hero-content p { font-size: 1rem; }
-            .auth-card { padding: 30px 20px; }
-            .form-group input, .form-group select { padding: 14px 16px; }
-            .btn { padding: 14px 28px; }
+            .hero {
+                padding: 150px 0 80px;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section {
+                padding: 60px 0;
+            }
+            
+            .feature-card {
+                padding: 20px;
+            }
         }
 
-        /* Loading animation */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+
+        /* Staggered fade-in for feature cards and steps */
+        .feature-card, .step {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s ease forwards;
+        }
+        .feature-card.delay-1, .step.delay-1 { animation-delay: 0.2s; }
+        .feature-card.delay-2, .step.delay-2 { animation-delay: 0.4s; }
+        .feature-card.delay-3, .step.delay-3 { animation-delay: 0.6s; }
+        .feature-card.delay-4, .step.delay-4 { animation-delay: 0.8s; }
+        .feature-card.delay-5, .step.delay-5 { animation-delay: 1.0s; }
+        .feature-card.delay-6, .step.delay-6 { animation-delay: 1.2s; }
+
+        /* Button hover animations */
+        .btn {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+
+        /* New animation: pulse effect on CTA buttons */
+        .cta-buttons .btn:hover {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 87, 34, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 87, 34, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 87, 34, 0);
+            }
+        }
+
+        /* New animation: slide-in for section titles */
+        .section-title h2 {
+            opacity: 0;
+            transform: translateX(-50px);
+            animation: slideIn 1s forwards;
+        }
+        .section-title h2.fade-in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Card hover animations */
+        .feature-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        /* Parallax hero background */
+        .hero {
+            background-attachment: fixed;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* Typing animation for hero title */
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        @keyframes blinkCaret {
+            0%, 100% { border-color: transparent }
+            50% { border-color: white; }
+        }
+        .hero h1 {
+            overflow: visible;
+            white-space: normal;
+            border-right: none;
+            max-width: 100%;
+            width: auto;
+            animation: none;
         }
     </style>
 </head>
 <body>
     <!-- Header -->
     <header>
-        <div class="container header-container">
-            <a href="#" class="logo">
-                <div class="logo-icon">SGS</div>
-                <div class="logo-text"><h1>Student Grievance System</h1></div>
-            </a>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h1>Student Grievance Portal</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="nav-buttons">
+                    <div class="login-dropdown">
+                        <a class="login-btn">
+                            <i class="fas fa-user"></i>
+                            Login
+                            <i class="fas fa-chevron-down" style="font-size: 0.8rem; margin-left: 5px;"></i>
+                        </a>
+                        <div class="dropdown-content">
+                            <a href="studentlogin.html">
+                                <i class="fas fa-user-graduate"></i>
+                                Student Login
+                            </a>
+                            <a href="admin-login.html">
+                                <i class="fas fa-user-shield"></i>
+                                Admin Login
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
         </div>
     </header>
 
-    <!-- Dark Mode Toggle -->
-    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">
-        <i class="fas fa-moon"></i>
-    </button>
-
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="hero-container">
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
             <div class="hero-content">
-                <h1>Student Grievance Portal</h1>
-                <p>Submit and track your complaints with our secure system. Get quick resolutions from your institution's administration team.</p>
+                <h1 class="fade-in">Empowering Students. Resolving Grievances.</h1>
+                <p class="fade-in delay-1">Submit your grievances online, track them in real-time, and get quick resolutions.</p>
+                <div class="hero-buttons fade-in delay-2">
+                    <a href="studentlogin.html" class="btn btn-primary">Login</a>
+                    <a href="#about" class="btn btn-secondary">Learn More</a>
+                </div>
             </div>
-            <div class="auth-cards">
-                <!-- Student Login Card -->
-                <div class="auth-card active" id="studentLogin">
-                    <h2><i class="fas fa-user-graduate"></i> Student Login</h2>
-                    <form id="studentForm">
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" id="studentEmail" placeholder="student@college.edu" required>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>About the Portal</h2>
+                <p>Learn how our platform helps students resolve issues effectively</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Streamlined Grievance Resolution</h3>
+                    <p>The Student Grievance Portal is designed to help students submit grievances regarding academics, hostel facilities, library services, and other concerns in a streamlined and efficient manner.</p>
+                    <p>Our platform ensures timely resolution by connecting students directly with the relevant authorities, providing transparency throughout the process, and enabling real-time tracking of complaint status.</p>
+                    <p>With a user-friendly interface and robust backend support, we're committed to making grievance resolution faster, fairer, and more accessible for all students.</p>
+                    <a href="#" class="btn btn-primary">Get Started</a>
+                </div>
+                <div class="about-image">
+                    <img src="screencapture-images-unsplash-photo-1522202176988-66273c2fd55f-2025-10-09-10_33_40.png" alt="Students collaborating">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Key Features</h2>
+                <p>Discover how our portal makes grievance resolution simple and effective</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-upload"></i>
+                    </div>
+                    <h3>Submit Grievances Easily</h3>
+                    <p>Simple form with file upload support to submit your concerns with all necessary details and evidence.</p>
+                </div>
+                <div class="feature-card fade-in delay-1">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Track Status in Real-Time</h3>
+                    <p>Monitor the progress of your grievances through a personalized dashboard with real-time updates.</p>
+                </div>
+                <div class="feature-card fade-in delay-2">
+                    <div class="feature-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3>Instant Notifications</h3>
+                    <p>Receive email and SMS updates whenever there's a change in your grievance status or new responses.</p>
+                </div>
+                <div class="feature-card fade-in delay-3">
+                    <div class="feature-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>Transparent Resolution</h3>
+                    <p>View complete admin responses and resolution details for full transparency in the process.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>Multi-Department Support</h3>
+                    <p>Submit grievances to various departments including Academic, Hostel, Library, and others.</p>
+                </div>
+                <div class="feature-card fade-in delay-1">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Help & Support</h3>
+                    <p>Access comprehensive FAQs or contact our support team for assistance with the portal.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="section how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>How It Works</h2>
+                <p>Simple steps to submit and track your grievances</p>
+            </div>
+            <div class="steps">
+                <div class="step fade-in">
+                    <div class="step-number">1</div>
+                    <h3>Register/Login</h3>
+                    <p>Create your account or login with your existing credentials to access the portal.</p>
+                </div>
+                <div class="step fade-in delay-1">
+                    <div class="step-number">2</div>
+                    <h3>Submit Grievance</h3>
+                    <p>Fill out the grievance form with necessary details and upload any supporting documents.</p>
+                </div>
+                <div class="step fade-in delay-2">
+                    <div class="step-number">3</div>
+                    <h3>Track Status</h3>
+                    <p>Monitor the progress of your grievance through your personal dashboard in real-time.</p>
+                </div>
+                <div class="step fade-in delay-3">
+                    <div class="step-number">4</div>
+                    <h3>Receive Resolution</h3>
+                    <p>Get notified when your grievance is resolved and view the detailed response from authorities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>What Students Say</h2>
+                <p>Hear from students who have used our portal successfully</p>
+            </div>
+            <div class="testimonials-container">
+                <div class="testimonial fade-in">
+                    <div class="testimonial-content">
+                        <p>"The grievance portal made it so easy to submit my hostel maintenance issue. I got a response within 24 hours and the problem was fixed the next day. Highly recommended!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Student">
                         </div>
-                        <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" id="studentPassword" placeholder="••••••••" required>
+                        <div class="author-info">
+                            <h4>Sarah Johnson</h4>
+                            <p>Computer Science Student</p>
                         </div>
-                        <button type="submit" class="btn">
-                            <span class="btn-text">Login</span>
-                            <span class="loading" style="display: none;"></span>
-                        </button>
-                    </form>
-                    <div class="form-footer">
-                        New student? <a id="showSignup">Create account</a> |
-                        <a href="forgot-password.html">Forgot Password?</a>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
+    </section>
 
-    <!-- Signup Modal -->
-    <div class="modal" id="signupModal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2><i class="fas fa-user-plus"></i> Student Sign Up</h2>
-            <form id="signupForm">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="signupName" placeholder="John Doe" required>
-                </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="signupEmail" placeholder="student@college.edu" required>
-                </div>
-                <div class="form-group">
-                    <label>Student ID</label>
-                    <input type="text" id="signupStudentId" placeholder="123456" required>
-                </div>
-                <div class="form-group">
-                    <label>Department</label>
-                    <select id="signupDepartment" required>
-                        <option value="">Select department</option>
-                        <option value="computer">Computer Science</option>
-                        <option value="electrical">Electrical Engineering</option>
-                        <option value="mechanical">Mechanical Engineering</option>
-                        <option value="civil">Civil Engineering</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="signupPassword" placeholder="••••••••" required>
-                </div>
-                <div class="form-group">
-                    <label>Confirm Password</label>
-                    <input type="password" id="signupConfirmPassword" placeholder="••••••••" required>
-                </div>
-                <button type="submit" class="btn">
-                    <span class="btn-text">Create Account</span>
-                    <span class="loading" style="display: none;"></span>
-                </button>
-                <div class="form-footer">Already have an account? <a id="showLogin">Login here</a></div>
-            </form>
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2 class="fade-in">Ready to Submit Your Grievance?</h2>
+            <p class="fade-in delay-1">Join thousands of students who have resolved their issues through our portal</p>
+            <div class="cta-buttons fade-in delay-2">
+                <a href="studentlogin.html" class="btn btn-accent">Login as Student</a>
+
+            </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Admin Login Section -->
+   
 
     <!-- Footer -->
-    <footer>
+    <footer id="contact">
         <div class="container">
-            <p>&copy; 2023 Student Grievance System. All rights reserved.</p>
-           
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Student Grievance Portal</h3>
+                    <p>A platform dedicated to resolving student concerns efficiently and transparently.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="contact-info">
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>support@grievanceportal.edu</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+1 (555) 123-4567</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>University Campus, City, State 12345</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Data Protection</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Student Grievance Portal. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 
-    <!-- JS: Connect to backend -->
     <script>
-        const toggleButtons = document.querySelectorAll('.auth-toggle-btn');
-        const authCards = document.querySelectorAll('.auth-card');
-        
-        toggleButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                toggleButtons.forEach(btn => btn.classList.remove('active'));
-                authCards.forEach(card => card.classList.remove('active'));
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
                 
-                button.classList.add('active');
-                const targetCard = document.getElementById(button.dataset.target);
-                targetCard.classList.add('active');
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
 
-        document.getElementById('showSignup').addEventListener('click', () => {
-            document.getElementById('signupModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
-        document.getElementById('showLogin').addEventListener('click', () => {
-            document.getElementById('signupModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-        document.querySelector('.close-modal').addEventListener('click', () => {
-            document.getElementById('signupModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-        window.addEventListener('click', (e) => {
-            if (e.target === document.getElementById('signupModal')) {
-                document.getElementById('signupModal').classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
+        // Mobile menu toggle
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        const navButtons = document.querySelector('.nav-buttons');
+        
+        mobileMenu.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
         });
 
-        // Signup
-        document.getElementById('signupForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            const btn = e.target.querySelector('.btn');
-            const btnText = btn.querySelector('.btn-text');
-            const loading = btn.querySelector('.loading');
-            btnText.style.display = 'none';
-            loading.style.display = 'inline-block';
-            btn.disabled = true;
-
-            const name = document.getElementById('signupName').value.trim();
-            const email = document.getElementById('signupEmail').value.trim();
-            const studentId = document.getElementById('signupStudentId').value.trim();
-            const department = document.getElementById('signupDepartment').value;
-            const password = document.getElementById('signupPassword').value;
-            const confirmPassword = document.getElementById('signupConfirmPassword').value;
-
-            if (password !== confirmPassword) {
-                alert("Passwords do not match!");
-                btnText.style.display = 'inline';
-                loading.style.display = 'none';
-                btn.disabled = false;
-                return;
-            }
-
-            try {
-                const response = await fetch("http://localhost:9000/api/auth/register", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        username: name,
-                        email,
-                        password,
-                        role: "student",
-                        studentId,
-                        department
-                    })
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    alert("✅ Account created successfully! Please login.");
-                    document.getElementById('signupModal').classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                    console.log("Signup Success:", data);
-                } else {
-                    alert(`❌ Error: ${data.message}`);
-                    console.error("Signup Error:", data);
+        // Admin Login Form Handler
+        const adminForm = document.getElementById('adminForm');
+        if (adminForm) {
+            adminForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const email = document.getElementById('adminEmail').value;
+                const password = document.getElementById('adminPassword').value;
+                const department = document.getElementById('adminDept').value;
+                
+                try {
+                    const response = await fetch('/api/auth/admin/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            email,
+                            password,
+                            department
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        localStorage.setItem('adminToken', data.token);
+                        window.location.href = 'admin.html';
+                    } else {
+                        alert(data.message || 'Login failed. Please try again.');
+                    }
+                } catch (error) {
+                    console.error('Login error:', error);
+                    alert('An error occurred during login. Please try again.');
                 }
-            } catch (err) {
-                alert("❌ Network error. Check backend server.");
-                console.error("Network Error:", err);
-            } finally {
-                btnText.style.display = 'inline';
-                loading.style.display = 'none';
-                btn.disabled = false;
-            }
+            });
+            navButtons.style.display = navButtons.style.display === 'flex' ? 'none' : 'flex';
         });
 
-        // Student Login
-        document.getElementById('studentForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
-            const btn = e.target.querySelector('.btn');
-            const btnText = btn.querySelector('.btn-text');
-            const loading = btn.querySelector('.loading');
-            btnText.style.display = 'none';
-            loading.style.display = 'inline-block';
-            btn.disabled = true;
-
-            const email = document.getElementById('studentEmail').value.trim();
-            const password = document.getElementById('studentPassword').value;
-
-            try {
-                const response = await fetch("http://localhost:9000/api/auth/login", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ email, password })
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    alert("✅ Login successful!");
-                    console.log("Login Success:", data);
-                    // Save student info to localStorage and redirect to dashboard
-                    localStorage.setItem('student', JSON.stringify(data.user));
-                    // Redirect to student.html
-                    window.location.href = 'student.html';
-                } else {
-                    alert(`❌ Login failed: ${data.message}`);
-                    console.error("Login Error:", data);
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
                 }
-            } catch (err) {
-                alert("❌ Network error. Check backend server.");
-                console.error("Network Error:", err);
-            } finally {
-                btnText.style.display = 'inline';
-                loading.style.display = 'none';
-                btn.disabled = false;
-            }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.feature-card, .step, .testimonial').forEach(el => {
+            observer.observe(el);
         });
 
-        // Admin Login
-       document.getElementById('adminForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
+        // Add animation to elements on page load
+        window.addEventListener('load', () => {
+            // Trigger staggered animations for feature cards and steps
+            const featureCards = document.querySelectorAll('.feature-card');
+            featureCards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.2}s`;
+                card.classList.add('fade-in');
+            });
 
-    const email = document.getElementById('adminEmail').value.trim();
-    const password = document.getElementById('adminPassword').value;
-    const department = document.getElementById('adminDept').value;
+            const steps = document.querySelectorAll('.step');
+            steps.forEach((step, index) => {
+                step.style.animationDelay = `${index * 0.2}s`;
+                step.classList.add('fade-in');
+            });
 
-    try {
-        const response = await fetch("http://localhost:9000/api/auth/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password })
+            // Trigger fade-in for other elements
+            document.querySelectorAll('.fade-in').forEach(el => {
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            });
         });
 
-        const data = await response.json();
-
-        if (response.ok) {
-            alert(`✅ Admin login successful! Welcome ${data.user.username}`);
-            console.log("Admin Login Success:", data);
-            // Save admin info to localStorage and redirect to admin dashboard
-            localStorage.setItem('admin', JSON.stringify(data.user));
-            // Pass admin username and profile image to admin.html via localStorage
-            localStorage.setItem('adminUserName', data.user.username);
-            localStorage.setItem('adminUserImage', data.user.profileImage || 'https://randomuser.me/api/portraits/men/32.jpg');
-            window.location.href = 'admin.html';
-        } else {
-            alert(`❌ Login failed: ${data.message}`);
-            console.error("Admin Login Error:", data);
-        }
-    } catch (err) {
-        alert("❌ Network error. Check backend server.");
-        console.error("Network Error:", err);
-    }
-});
-
-        // Dark Mode Toggle Functionality
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        const body = document.body;
-        const icon = darkModeToggle.querySelector('i');
-
-        // Check for saved theme preference or default to light mode
-        const currentTheme = localStorage.getItem('theme') || 'light';
-        if (currentTheme === 'dark') {
-            body.classList.add('dark-mode');
-            icon.classList.remove('fa-moon');
-            icon.classList.add('fa-sun');
-        }
-
-        darkModeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            const isDark = body.classList.contains('dark-mode');
-
-            // Update icon
-            if (isDark) {
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
-                localStorage.setItem('theme', 'light');
-            }
+        // Parallax scrolling effect for hero background
+        window.addEventListener('scroll', () => {
+            const hero = document.querySelector('.hero');
+            let offset = window.pageYOffset;
+            hero.style.backgroundPositionY = offset * 0.5 + 'px';
         });
-
-        // Admin Login
-        document.getElementById('adminForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            const email = document.getElementById('adminEmail').value.trim();
-            const password = document.getElementById('adminPassword').value;
-            const department = document.getElementById('adminDept').value;
-
-            try {
-                const response = await fetch("http://localhost:9000/api/auth/admin-login", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ email, password, department })
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    alert(`✅ Admin login successful! Welcome ${data.user.username}`);
-                    console.log("Admin Login Success:", data);
-                    // Save admin info to localStorage and redirect to admin dashboard
-                    localStorage.setItem('admin', JSON.stringify(data.user));
-                    // Pass admin username and profile image to admin.html via localStorage
-                    localStorage.setItem('adminUserName', data.user.username);
-                    localStorage.setItem('adminUserImage', data.user.photo || 'https://randomuser.me/api/portraits/men/32.jpg');
-                    window.location.href = 'admin.html';
-                } else {
-                    alert(`❌ Login failed: ${data.message}`);
-                    console.error("Admin Login Error:", data);
-                }
-            } catch (err) {
-                alert("❌ Network error. Check backend server.");
-                console.error("Network Error:", err);
-            }
-        });
-
     </script>
 </body>
 </html>
-

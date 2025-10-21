@@ -1,0 +1,665 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Grievance System | Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            200: '#bae0fd',
+                            300: '#7cc8fb',
+                            400: '#37aaf7',
+                            500: '#0e90e9',
+                            600: '#0272c7',
+                            700: '#045ba1',
+                            800: '#0a4d85',
+                            900: '#0d426f',
+                            950: '#082844',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+        <style>
+        @keyframes spin { to { transform: rotate(360deg) } }
+        .loading {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 3px solid rgba(0,0,0,0.08);
+            border-radius: 50%;
+            border-top-color: #0B5FFF;
+            animation: spin 1s linear infinite;
+        }
+        .dark-mode .loading {
+            border-color: rgba(255,255,255,0.08);
+            border-top-color: #60A5FA;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            200: '#bae0fd',
+                            300: '#7cc8fb',
+                            400: '#37aaf7',
+                            500: '#0B5FFF',
+                            600: '#0272c7',
+                            700: '#045ba1',
+                            800: '#0a4d85',
+                            900: '#0d426f',
+                            950: '#082844',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">SGS</div>
+                <div class="logo-text"><h1>Student Grievance System</h1></div>
+            </a>
+        </div>
+    </header>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" style="position:fixed;right:18px;top:18px;z-index:40">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Main Content -->
+    <main class="min-h-screen py-16 px-4 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-md mx-auto">
+            <div class="text-center mb-8">
+                <a href="#" class="inline-flex items-center gap-3 group" aria-label="Go to homepage">
+                    <div class="w-12 h-12 flex items-center justify-center bg-gradient-to-r from-primary-500 to-blue-500 rounded-xl text-white font-bold shadow-lg group-hover:shadow-primary-500/50 transition duration-300">
+                        SG
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold text-gray-900 dark:text-white">Student Grievance System</h1>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Securely submit and track grievances</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-8 border border-gray-100 dark:border-gray-700">
+                <h2 class="text-2xl font-semibold text-center mb-2 text-gray-900 dark:text-white">Student Login</h2>
+                <p class="text-center text-sm text-gray-600 dark:text-gray-400 mb-6">Sign in to continue to your dashboard</p>
+
+                <form id="studentForm" class="space-y-4" novalidate>
+                    <div class="space-y-1">
+                        <label for="studentEmail" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Email address</label>
+                        <input 
+                            type="email" 
+                            id="studentEmail" 
+                            name="email"
+                            autocomplete="email"
+                            placeholder="student@college.edu" 
+                            required 
+                            class="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-600 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 dark:bg-gray-700 dark:text-white dark:focus:border-primary-400 dark:placeholder-gray-400 transition duration-150"
+                            aria-describedby="email-error">
+                    </div>
+                    <div class="space-y-1">
+                        <label for="studentPassword" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Password</label>
+                        <input 
+                            type="password" 
+                            id="studentPassword" 
+                            name="password"
+                            autocomplete="current-password"
+                            placeholder="••••••••" 
+                            required 
+                            class="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-600 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 dark:bg-gray-700 dark:text-white dark:focus:border-primary-400 dark:placeholder-gray-400 transition duration-150"
+                            aria-describedby="password-error">
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <label class="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 select-none">
+                            <input 
+                                type="checkbox" 
+                                id="remember" 
+                                name="remember"
+                                class="w-4 h-4 rounded border-gray-300 text-primary-500 focus:ring-primary-500/20 dark:border-gray-600 dark:bg-gray-700">
+                            Remember me
+                        </label>
+                        <a href="forgot-password.html" class="text-sm font-semibold text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300">
+                            Forgot password?
+                        </a>
+                    </div>
+                    <button 
+                        type="submit" 
+                        class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition duration-150">
+                        <span class="btn-text">Sign in</span>
+                        <span class="loading hidden" aria-hidden="true"></span>
+                    </button>
+
+                    <div class="text-center text-sm text-gray-600 dark:text-gray-400">
+                        New student? 
+                        <button 
+                            type="button" 
+                            id="showSignup" 
+                            class="font-semibold text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300 focus:outline-none focus:underline">
+                            Create account
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Signup Modal -->
+    <div class="modal fixed inset-0 bg-black/50 backdrop-blur-sm items-center justify-center p-4 hidden z-50" id="signupModal">
+        <div class="bg-white dark:bg-gray-800 w-full max-w-md rounded-2xl shadow-xl relative overflow-hidden animate-[scaleIn_0.2s_ease-out]">
+            <div class="p-6 sm:p-8">
+                <button type="button" class="close-modal absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                    <span class="sr-only">Close modal</span>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+                
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white flex items-center justify-center gap-2">
+                        <i class="fas fa-user-plus text-primary-500"></i>
+                        Student Sign Up
+                    </h2>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Create your account to get started</p>
+                </div>
+
+                <form id="signupForm" class="space-y-4">
+                    <div>
+                        <label for="signupName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full Name</label>
+                        <input 
+                            type="text" 
+                            id="signupName" 
+                            name="name"
+                            required 
+                            placeholder="John Doe"
+                            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 dark:bg-gray-700 dark:text-white dark:focus:border-primary-400 dark:placeholder-gray-400"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="signupEmail" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                        <input 
+                            type="email" 
+                            id="signupEmail" 
+                            name="email"
+                            required 
+                            placeholder="student@college.edu"
+                            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 dark:bg-gray-700 dark:text-white dark:focus:border-primary-400 dark:placeholder-gray-400"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="signupStudentId" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Student ID</label>
+                        <input 
+                            type="text" 
+                            id="signupStudentId" 
+                            name="studentId"
+                            required 
+                            placeholder="123456"
+                            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 dark:bg-gray-700 dark:text-white dark:focus:border-primary-400 dark:placeholder-gray-400"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="signupDepartment" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Department</label>
+                        <select 
+                            id="signupDepartment" 
+                            name="department"
+                            required
+                            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 dark:bg-gray-700 dark:text-white dark:focus:border-primary-400"
+                        >
+                            <option value="">Select department</option>
+                            <option value="computer">Computer Science</option>
+                            <option value="electrical">Electrical Engineering</option>
+                            <option value="mechanical">Mechanical Engineering</option>
+                            <option value="civil">Civil Engineering</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="signupPassword" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password</label>
+                        <input 
+                            type="password" 
+                            id="signupPassword" 
+                            name="password"
+                            required 
+                            placeholder="••••••••"
+                            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 dark:bg-gray-700 dark:text-white dark:focus:border-primary-400 dark:placeholder-gray-400"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="signupConfirmPassword" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Confirm Password</label>
+                        <input 
+                            type="password" 
+                            id="signupConfirmPassword" 
+                            name="confirmPassword"
+                            required 
+                            placeholder="••••••••"
+                            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 dark:bg-gray-700 dark:text-white dark:focus:border-primary-400 dark:placeholder-gray-400"
+                        >
+                    </div>
+
+                    <button 
+                        type="submit"
+                        class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-primary-500 hover:bg-primary-600 text-white font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition-colors"
+                    >
+                        <span class="btn-text">Create Account</span>
+                        <span class="loading hidden"></span>
+                    </button>
+
+                    <p class="text-center text-sm text-gray-600 dark:text-gray-400">
+                        Already have an account? 
+                        <button 
+                            type="button"
+                            id="showLogin"
+                            class="font-medium text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300 focus:outline-none focus:underline"
+                        >
+                            Login here
+                        </button>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Student Grievance System. All rights reserved.</p>
+           
+        </div>
+    </footer>
+
+    <!-- JS: Connect to backend -->
+    <script>
+        const toggleButtons = document.querySelectorAll('.auth-toggle-btn');
+        const authCards = document.querySelectorAll('.auth-card');
+        
+        toggleButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                toggleButtons.forEach(btn => btn.classList.remove('active'));
+                authCards.forEach(card => card.classList.remove('active'));
+                
+                button.classList.add('active');
+                const targetCard = document.getElementById(button.dataset.target);
+                targetCard.classList.add('active');
+            });
+        });
+
+        // Modal management
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Show signup modal
+        document.getElementById('showSignup').addEventListener('click', () => {
+            showModal('signupModal');
+        });
+
+        // Hide signup modal when clicking "Login here"
+        document.getElementById('showLogin').addEventListener('click', () => {
+            hideModal('signupModal');
+        });
+
+        // Hide modal when clicking close button
+        document.querySelector('.close-modal').addEventListener('click', () => {
+            hideModal('signupModal');
+        });
+
+        // Hide modal when clicking outside
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('signupModal');
+            if (e.target === modal) {
+                hideModal('signupModal');
+            }
+        });
+
+        // Form validation helper
+        function validateEmail(email) {
+            const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return re.test(email);
+        }
+
+        function validatePassword(password) {
+            return password.length >= 8;
+        }
+
+        function validateStudentId(studentId) {
+            return /^\d{4,8}$/.test(studentId);
+        }
+
+        // Signup
+        document.getElementById('signupForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const form = e.target;
+            const btn = form.querySelector('button[type="submit"]');
+            const btnText = btn.querySelector('.btn-text');
+            const loading = btn.querySelector('.loading');
+
+            // Show loading state
+            btnText.style.display = 'none';
+            loading.style.display = 'inline-block';
+            btn.disabled = true;
+
+            try {
+                const name = document.getElementById('signupName').value.trim();
+                const email = document.getElementById('signupEmail').value.trim().toLowerCase();
+                const studentId = document.getElementById('signupStudentId').value.trim();
+                const department = document.getElementById('signupDepartment').value;
+                const password = document.getElementById('signupPassword').value;
+                const confirmPassword = document.getElementById('signupConfirmPassword').value;
+
+                // Validation
+                if (!name || name.length < 3) {
+                    throw new Error("Name must be at least 3 characters long");
+                }
+
+                if (!validateEmail(email)) {
+                    throw new Error("Please enter a valid email address");
+                }
+
+                if (!validateStudentId(studentId)) {
+                    throw new Error("Student ID must be 4-8 digits");
+                }
+
+                if (!department) {
+                    throw new Error("Please select your department");
+                }
+
+                if (!validatePassword(password)) {
+                    throw new Error("Password must be at least 8 characters long");
+                }
+
+                if (password !== confirmPassword) {
+                    throw new Error("Passwords do not match");
+                }
+
+                // Check server availability
+                const serverCheck = await fetch("http://localhost:9000/api/auth/register", {
+                    method: "HEAD"
+                }).catch(() => null);
+
+                if (!serverCheck) {
+                    throw new Error("Unable to connect to server");
+                }
+
+                const response = await fetch("http://localhost:9000/api/auth/register", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        username: name,
+                        email,
+                        password,
+                        role: "student",
+                        studentId,
+                        department
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert("✅ Account created successfully! Please login.");
+                    // Clear form
+                    form.reset();
+                    
+                    // Close modal after a short delay
+                    setTimeout(() => {
+                        hideModal('signupModal');
+                    }, 1000);
+
+                    // Focus on login email field
+                    document.getElementById('studentEmail').focus();
+                    
+                    console.log("Signup Success:", data);
+                } else {
+                    if (response.status === 400 && data.message.includes("exists")) {
+                        throw new Error("An account with this email already exists");
+                    } else {
+                        throw new Error(data.message || "Registration failed. Please try again.");
+                    }
+                }
+            } catch (err) {
+                console.error("Registration Error:", err);
+                
+                // User-friendly error messages
+                if (err.message === "Unable to connect to server") {
+                    alert("❌ Unable to connect to server. Please ensure the backend server is running.");
+                } else if (err.message.includes("email already exists")) {
+                    alert("❌ This email is already registered. Please try logging in instead.");
+                } else if (err.message.includes("Network Error")) {
+                    alert("❌ Network error. Please check your internet connection.");
+                } else {
+                    alert(`❌ ${err.message}`);
+                }
+            } finally {
+                // Restore button state
+                btnText.style.display = 'inline-block';
+                loading.style.display = 'none';
+                btn.disabled = false;
+            }
+        });
+
+        // Student Login
+        document.getElementById('studentForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const form = e.target;
+            const btn = form.querySelector('button[type="submit"]');
+            const btnText = btn.querySelector('.btn-text');
+            const loading = btn.querySelector('.loading');
+
+            // Show loading state
+            btnText.style.display = 'none';
+            loading.style.display = 'inline-block';
+            btn.disabled = true;
+
+            const email = document.getElementById('studentEmail').value.trim();
+            const password = document.getElementById('studentPassword').value;
+
+            try {
+                // Check if server is running first
+                const serverCheck = await fetch("http://localhost:9000/api/auth/login", {
+                    method: "HEAD"
+                }).catch(() => null);
+
+                if (!serverCheck) {
+                    throw new Error("Server is not running");
+                }
+
+                const response = await fetch("http://localhost:9000/api/auth/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ 
+                        email, 
+                        password,
+                        role: "student" // Specify role for backend validation
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    if (data.user && data.user.role === 'student') {
+                        // Store user data and token
+                        localStorage.setItem('student', JSON.stringify(data.user));
+                        localStorage.setItem('token', data.token);
+                        localStorage.setItem('studentName', data.user.username);
+                        localStorage.setItem('studentId', data.user.studentId);
+
+                        // Success message and redirect
+                        alert(`✅ Welcome back, ${data.user.username}!`);
+                        window.location.href = 'student.html';
+                    } else {
+                        alert('❌ This appears to be an admin account. Please use the admin login page.');
+                    }
+                } else {
+                    if (response.status === 401) {
+                        alert('❌ Invalid email or password. Please try again.');
+                    } else if (data.message) {
+                        alert(`❌ ${data.message}`);
+                    } else {
+                        alert('❌ Login failed. Please try again later.');
+                    }
+                    console.error("Login Error:", data);
+                }
+            } catch (err) {
+                console.error("Network Error:", err);
+                if (err.message === "Server is not running") {
+                    alert("❌ Unable to connect to server. Please ensure the backend server is running.");
+                } else {
+                    alert("❌ Network error. Please check your internet connection.");
+                }
+            } finally {
+                // Restore button state
+                btnText.style.display = 'inline-block';
+                loading.style.display = 'none';
+                btn.disabled = false;
+            }
+        });
+
+        // Admin Login
+       document.getElementById('adminForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById('adminEmail').value.trim();
+    const password = document.getElementById('adminPassword').value;
+    const department = document.getElementById('adminDept').value;
+
+    try {
+        const response = await fetch("http://localhost:9000/api/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            alert(`✅ Admin login successful! Welcome ${data.user.username}`);
+            console.log("Admin Login Success:", data);
+            // Save admin info to localStorage and redirect to admin dashboard
+            localStorage.setItem('admin', JSON.stringify(data.user));
+            // Pass admin username and profile image to admin.html via localStorage
+            localStorage.setItem('adminUserName', data.user.username);
+            localStorage.setItem('adminUserImage', data.user.profileImage || 'https://randomuser.me/api/portraits/men/32.jpg');
+            window.location.href = 'admin.html';
+        } else {
+            alert(`❌ Login failed: ${data.message}`);
+            console.error("Admin Login Error:", data);
+        }
+    } catch (err) {
+        alert("❌ Network error. Check backend server.");
+        console.error("Network Error:", err);
+    }
+});
+
+        // Dark Mode Toggle Functionality
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+        const icon = darkModeToggle.querySelector('i');
+
+        // Check for saved theme preference or default to light mode
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        if (currentTheme === 'dark') {
+            body.classList.add('dark-mode');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isDark = body.classList.contains('dark-mode');
+
+            // Update icon
+            if (isDark) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Admin Login
+        document.getElementById('adminForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('adminEmail').value.trim();
+            const password = document.getElementById('adminPassword').value;
+            const department = document.getElementById('adminDept').value;
+
+            try {
+                const response = await fetch("http://localhost:9000/api/auth/admin-login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password, department })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert(`✅ Admin login successful! Welcome ${data.user.username}`);
+                    console.log("Admin Login Success:", data);
+                    // Save admin info to localStorage and redirect to admin dashboard
+                    localStorage.setItem('admin', JSON.stringify(data.user));
+                    // Pass admin username and profile image to admin.html via localStorage
+                    localStorage.setItem('adminUserName', data.user.username);
+                    localStorage.setItem('adminUserImage', data.user.photo || 'https://randomuser.me/api/portraits/men/32.jpg');
+                    window.location.href = 'admin.html';
+                } else {
+                    alert(`❌ Login failed: ${data.message}`);
+                    console.error("Admin Login Error:", data);
+                }
+            } catch (err) {
+                alert("❌ Network error. Check backend server.");
+                console.error("Network Error:", err);
+            }
+        });
+
+    </script>
+</body>
+</html>
+

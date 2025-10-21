@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Grievance System | Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            200: '#bae0fd',
+                            300: '#7cc8fb',
+                            400: '#37aaf7',
+                            500: '#0e90e9',
+                            600: '#0272c7',
+                            700: '#045ba1',
+                            800: '#0a4d85',
+                            900: '#0d426f',
+                            950: '#082844',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .bg-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3z' fill='%232563eb' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 10px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 bg-pattern min-h-screen">
+    <!-- Animated background gradient -->
+    <div class="fixed inset-0 bg-gradient-to-br from-primary-500/10 to-primary-600/5 -z-10"></div>
+    
+    <!-- Header -->
+    <header class="fixed w-full top-0 z-50">
+        <nav class="glass-effect border-b border-white/20 px-4 sm:px-6 py-3">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <a href="index.html" class="flex items-center space-x-3 group">
+                    <div class="w-10 h-10 bg-gradient-to-r from-primary-600 to-primary-500 rounded-lg flex items-center justify-center shadow-lg group-hover:shadow-primary-500/50 transition duration-300">
+                        <span class="text-white font-bold text-lg">SGS</span>
+                    </div>
+                    <h1 class="text-xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-primary-500">
+                        Student Grievance System
+                    </h1>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="min-h-screen pt-24 pb-16 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-24">
+                <!-- Left Column - Welcome Text -->
+                <div class="lg:w-1/2 space-y-6 animate-[slideIn_0.5s_ease-out]">
+                    <h2 class="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight">
+                        Welcome to <span class="text-primary-600">Student Grievance</span> Portal
+                    </h2>
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                        A secure platform where you can voice your concerns and get them resolved efficiently. We're here to make your academic journey smoother.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                        <a href="index.html#features" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-primary-600 hover:bg-primary-700 transition duration-150 ease-in-out">
+                            Learn More
+                            <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Column - Login Form -->
+                <div class="lg:w-1/2 w-full max-w-md animate-[slideUp_0.5s_ease-out]">
+                    <div class="bg-white/80 backdrop-blur-xl rounded-2xl shadow-xl border border-white/20 p-8">
+                        <div class="mb-8 text-center">
+                            <h3 class="text-2xl font-bold text-gray-900">Student Login</h3>
+                            <p class="text-gray-600 mt-2">Access your grievance portal</p>
+                        </div>
+                        <form id="studentLoginForm" class="space-y-6">
+                            <div>
+                                <label for="studentEmail" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-envelope text-gray-400"></i>
+                                    </div>
+                                    <input type="email" id="studentEmail" name="email" required
+                                        class="pl-10 w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition duration-200 bg-white/70 backdrop-blur-sm"
+                                        placeholder="student@college.edu">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="studentPassword" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-lock text-gray-400"></i>
+                                    </div>
+                                    <input type="password" id="studentPassword" name="password" required
+                                        class="pl-10 w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition duration-200 bg-white/70 backdrop-blur-sm"
+                                        placeholder="••••••••">
+                                    <button type="button" onclick="togglePassword()" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700">
+                                        <i id="eyeIcon" class="far fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="remember" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                                    <label for="remember" class="ml-2 block text-sm text-gray-700">Remember me</label>
+                                </div>
+                                <a href="forgot-password.html" class="text-sm font-medium text-primary-600 hover:text-primary-700">Forgot password?</a>
+                            </div>
+                            <button type="submit" class="w-full px-6 py-3 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 focus:ring-4 focus:ring-primary-500/50 transition duration-200 transform hover:-translate-y-0.5 flex items-center justify-center">
+                                <span>Sign In</span>
+                                <span class="loading hidden"></span>
+                            </button>
+                            <div class="text-center text-sm text-gray-600">
+                                Need help? <a href="#" class="font-medium text-primary-600 hover:text-primary-700">Contact Support</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('studentPassword');
+            const eyeIcon = document.getElementById('eyeIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            }
+        }
+
+        document.getElementById('studentLoginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const button = e.target.querySelector('button[type="submit"]');
+            const buttonText = button.querySelector('span:not(.loading)');
+            const loading = button.querySelector('.loading');
+            
+            buttonText.classList.add('opacity-0');
+            loading.classList.remove('hidden');
+            
+            const studentEmail = document.getElementById('studentEmail').value;
+            const password = document.getElementById('studentPassword').value;
+            
+            try {
+                const response = await fetch('http://localhost:9000/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        studentEmail,
+                        password
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    localStorage.setItem('student', JSON.stringify(data.student));
+                    window.location.href = 'student.html';
+                } else {
+                    buttonText.classList.remove('opacity-0');
+                    loading.classList.add('hidden');
+                    alert(data.message || 'Login failed. Please try again.');
+                }
+            } catch (err) {
+                console.error('Login error:', err);
+                buttonText.classList.remove('opacity-0');
+                loading.classList.add('hidden');
+                alert('An error occurred during login. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>
